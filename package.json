@@ -1,0 +1,17 @@
+{
+  "name": "FanghornnTV",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "~4.11.1",
+    "socket.io": "~1.3.2",
+    "omxcontrol": "0.0.1",
+    "favicon": "0.0.2",
+    "body-parser": "~1.10.2",
+    "express-logger": "0.0.3",
+    "method-override": "~2.3.1"
+  }
+}
