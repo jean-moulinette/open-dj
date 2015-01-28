@@ -145,25 +145,30 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('video', function(data){
 
+		console.log(data);
+
 		if(data.action === 'play'){
 			var id = data.video_id,
-				url = 'http://www.youtube.com/watch?v='+id;
+				url = 'http://www.youtube.com/watch?v='+data.id;
 		}
 
-		var runShell = new run_shell('youtube-dl',['-o','%(id)s.%(ext)s','-f','/18/22',url],
-			
-			function(me, buffer){
-			
-				me.stdout += buffer.toString();
+		var sys = require('sys');
+		var exec = require('child_process').exec;
+		var child;
 
-				socket.emit('loading',{output: me.stdout});
-			
-				console.log('Recu fonction play \n envoi de l\'event socket \'loading\' \n '+me.stdout);
-			},
-			function(){
-				//child = spawn('omxplayer', [id+'.mp4']);
-				omx.start(id+'.mp4');
-			});
+		child = exec('chromium-browser --kiosk '+url, function(error, stdout, stderr){
+
+			//Impression de la sortie standard
+			sys.print('stdout: ' + stdout);
+
+			//Impression de la sortie d'erreur
+			sys.print('stderr: ' + stderr);
+
+			if(error !== null){
+				console.log('exec error: '+error);
+			}
+
+		});
 
 	});
 
@@ -174,17 +179,7 @@ io.sockets.on('connection', function(socket){
 });
 
 server.listen(app.get('port'), function(){
+
   console.log('Express server listening on port ' + app.get('port'));
+
 });
-
-function run_shell(cmd, args, cb, end){
-	var spawn = require('child_process').spawn,
-	child = spawn(cmd, args),
-	me = this;
-
-	child.stdout.on('data', function(buffer){
-		cb(me, buffer);
-	});
-
-	child.stdout.on('end', end);
-}
