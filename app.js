@@ -9,9 +9,10 @@ var express = require('express'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
 	spawn = require('child_process').spawn,
-	omx = require('omxcontrol');
+	omx = require('omxcontrol'),
+	playing = false;
 
-app.set('port', process.env.TEST_PORT || 80);
+app.set('port', process.env.TEST_PORT || 8080);
 
 app.use(logger({path:'dev'}));
 
@@ -45,29 +46,16 @@ io.sockets.on('connection', function(socket){
 
 		//Garde en mémoire le socket screen
 		ss = socket;
-		console.log('Screen prêt...');
-	});
-
-	//Socket remote
-	socket.on('remote', function(data){
-		
-		console.log('Remote prête...');
-		
-		socket.type = 'remote';
-
-		if(ss !== undefined){
-			console.log('Synchronisé');
-		}
-
+		console.log('\n Client de recherche de vidéos viens de se connecter.\n');
 	});
 
 	socket.on('yt-search', function(data){
 		
+		console.log('\n Un client cherche une vidéo. \n');
+
 		data = data.toLowerCase();
 
 		data = data.replace(/ /g, '+');
-
-		console.log(data);
 
 		var requestTool = require('follow-redirects').http;
 
@@ -105,7 +93,19 @@ io.sockets.on('connection', function(socket){
 					
 					var stylesNinja = '';
 
-					htmlNinja += $('#results').html();
+					$('#results').find('.yt-lockup').each(function(){
+
+						$(this).find('button').each(function(){
+							$(this).remove();
+						});
+
+						var linkImage = $(this).find('.yt-lockup-thumbnail').html();
+						var title = $(this).find('.yt-lockup-content').find('a').html();
+						
+						var singleResult = linkImage+title+'<br/><br/><br/>';
+
+						htmlNinja += singleResult;
+					});
 
 					socket.emit('yt-result', htmlNinja);
 
@@ -119,60 +119,34 @@ io.sockets.on('connection', function(socket){
 	
 	});
 
-	//Actions de control
-	socket.on('controll', function(data){
-		console.log(data);
-
-		if(socket.type === 'remote'){
-
-			if(data.action === 'tap'){
-				if(ss !== undefined){
-					ss.emit('controlling', {action:'enter'});
-				}
-			}else if(data.action === 'swipeLeft'){
-				if(ss !== undefined){
-					ss.emit('controlling', {action:'goLeft'});
-				}
-			}else if(data.action === 'swipeRight'){
-				if(ss !== undefined){
-					ss.emit('controlling', {action:'goRight'});
-				}
-			}
-
-		}
-
-	});
-
 	socket.on('video', function(data){
 
-		console.log(data);
+		var child;
+		var audioTools = require('./lib/audioTools');
+		var soundName = data.id+'.mp3';
+		
+		console.log('\n\n*****************************');
+		console.log('*****************************');
+		console.log('Demande de lecture reçue par le client\n');
 
-		if(data.action === 'play'){
-			var id = data.video_id,
-				url = 'http://www.youtube.com/watch?v='+data.id;
+		console.log('Playing :'+playing);
+
+		var checkIfExist = audioTools.audioExist(data);
+
+		if(checkIfExist){
+			console.log('\nCe fichier MP3 existe déjà sur le serveur.\n');
+			audioTools.faitPeterLeSon(soundName);
+		}else{
+			console.log('\nLe fichier n\'a pas été trouvé sur le serveur, téléchargement lancé...\n');
+			audioTools.downloadVideo(data);
+			audioTools.faitPeterLeSon(soundName);
 		}
 
-		var sys = require('sys');
-		var exec = require('child_process').exec;
-		var child;
-
-		child = exec('chromium-browser --kiosk '+url, function(error, stdout, stderr){
-
-			//Impression de la sortie standard
-			sys.print('stdout: ' + stdout);
-
-			//Impression de la sortie d'erreur
-			sys.print('stderr: ' + stderr);
-
-			if(error !== null){
-				console.log('exec error: '+error);
-			}
-
-		});
+		console.log('*****************************');
+		console.log('*****************************');
+		console.log('Traitement de la demande de lecture terminé.');
 
 	});
-
-
 
 
 
