@@ -27,6 +27,3 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
-
-#le dossier de telechargement de musiques
-/downloaded/*

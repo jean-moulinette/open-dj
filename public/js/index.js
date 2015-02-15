@@ -1,4 +1,4 @@
-var socket = io.connect('localhost:8080');
+var socket = io.connect('localhost:1337');
 
 socket.on('connect', function(data){
 	socket.emit('screen');

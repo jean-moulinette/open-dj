@@ -65,9 +65,10 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
 	spawn = require('child_process').spawn,
 	omx = require('omxcontrol'),
-	playing = false;
+	playing = false,
+	audioTools = require('./lib/audioTools');
 
-app.set('port', process.env.TEST_PORT || 8080);
+app.set('port', process.env.TEST_PORT || 1337);
 
 app.use(logger({path:'dev'}));
 
@@ -105,88 +106,26 @@ io.sockets.on('connection', function(socket){
 	});
 
 	socket.on('yt-search', function(data){
-		
-		console.log('\n Un client cherche une vidéo. \n');
 
-		data = data.toLowerCase();
+		audioTools.searchVideo(data, socket);
 
-		data = data.replace(/ /g, '+');
-
-		var requestTool = require('follow-redirects').http;
-
-		var hostName = 'youtube.com';
-
-		var requestOptions = {
-			host: hostName,
-			path:'/results?search_query='+data,
-			port:'80'
-		};
-
-		var req = requestTool.request(requestOptions, function(requestResponse){
-
-			var htmlResponse = '';
-			
-			var htmlNinja = '';
-
-			requestResponse.setEncoding('utf8');
-
-			requestResponse.on('data', function(chunk){
-				htmlResponse += chunk;
-			});
-
-			requestResponse.on('end', function(){
-
-				var env = require('jsdom').env;
-
-				env(htmlResponse, function(errors, window){
-					
-					if(errors !== null){
-						console.log(errors);
-					}
-
-					var $ = require('jquery')(window);
-					
-					var stylesNinja = '';
-
-					$('#results').find('.yt-lockup').each(function(){
-
-						$(this).find('button').each(function(){
-							$(this).remove();
-						});
-
-						var linkImage = $(this).find('.yt-lockup-thumbnail').html();
-						var title = $(this).find('.yt-lockup-content').find('a').html();
-						
-						var singleResult = linkImage+title+'<br/><br/><br/>';
-
-						htmlNinja += singleResult;
-					});
-
-					socket.emit('yt-result', htmlNinja);
-
-				});
-
-			});
-
-		});
-
-		req.end();
-	
 	});
 
 	socket.on('video', function(data){
 
 		var child;
-		var audioTools = require('./lib/audioTools');
+
 		var soundName = data.id+'.mp3';
 		
 		console.log('\n\n*****************************');
 		console.log('*****************************');
 		console.log('Demande de lecture reçue par le client\n');
 
-		console.log('Playing :'+playing);
-
 		var checkIfExist = audioTools.audioExist(data);
+
+		console.log(checkIfExist);
+		console.log('return apres check');
+		return;
 
 		if(checkIfExist){
 			console.log('\nCe fichier MP3 existe déjà sur le serveur.\n');
