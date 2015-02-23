@@ -48,11 +48,6 @@
 		░░░░░░░░▓▓▓░░░░▓▓▓░░░░░░░░░░
 */
 
-
-
-
-
-
 /**
  *	Initialisation des lib du serveur
  */
@@ -63,9 +58,6 @@ var express = require('express'),
 	logger = require('express-logger'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
-	spawn = require('child_process').spawn,
-	omx = require('omxcontrol'),
-	playing = false,
 	audioTools = require('./lib/audioTools');
 
 app.set('port', process.env.TEST_PORT || 1337);
@@ -75,9 +67,6 @@ app.use(logger({path:'dev'}));
 app.use(methodOverride());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-//Module de controle de omxplayer, créé des route start/:filename pause quit 
-app.use(omx());
 
 
 //Routes
@@ -95,25 +84,28 @@ var ss;
 //Le serveur socket.io
 io.sockets.on('connection', function(socket){
 	
-	//Socket screen
+	//Commande IO init de la connection bidrectionelle avec le client
 	socket.on('screen', function(data){
 		
 		socket.type = 'screen';
 
 		//Garde en mémoire le socket screen
 		ss = socket;
-		console.log('\n Client de recherche de vidéos viens de se connecter.\n');
+		console.log('\n Un visiteur vient de se connecter.\n');
 	});
 
+	//Commande IO de recherche sur youtube
 	socket.on('yt-search', function(data){
 
+		console.log('\n Un client cherche une vidéo. \n');
+
+		//Envoi des résultats de la recherche au client par le serveur
 		audioTools.searchVideo(data, socket);
 
 	});
 
+	//Commande IO de récéption d'une requête vidéo spécifique youtube à lire
 	socket.on('video', function(data){
-
-		var child;
 
 		var soundName = data.id+'.mp3';
 		
@@ -121,24 +113,8 @@ io.sockets.on('connection', function(socket){
 		console.log('*****************************');
 		console.log('Demande de lecture reçue par le client\n');
 
-		var checkIfExist = audioTools.audioExist(data);
-
-		console.log(checkIfExist);
-		console.log('return apres check');
-		return;
-
-		if(checkIfExist){
-			console.log('\nCe fichier MP3 existe déjà sur le serveur.\n');
-			audioTools.faitPeterLeSon(soundName);
-		}else{
-			console.log('\nLe fichier n\'a pas été trouvé sur le serveur, téléchargement lancé...\n');
-			audioTools.downloadVideo(data);
-			audioTools.faitPeterLeSon(soundName);
-		}
-
-		console.log('*****************************');
-		console.log('*****************************');
-		console.log('Traitement de la demande de lecture terminé.');
+		//Le serveur prends la vidéo et fait le necessaires pour la lire
+		audioTools.audioExist(data);
 
 	});
 
@@ -146,6 +122,7 @@ io.sockets.on('connection', function(socket){
 
 });
 
+//Ouverture des vannes TCP !
 server.listen(app.get('port'), function(){
 
   console.log('Express server listening on port ' + app.get('port'));
