@@ -106,8 +106,6 @@ io.sockets.on('connection', function(socket){
 
 	//Commande IO de récéption d'une requête vidéo spécifique youtube à lire
 	socket.on('video', function(data){
-
-		var soundName = data.id+'.mp3';
 		
 		console.log('\n\n*****************************');
 		console.log('*****************************');
