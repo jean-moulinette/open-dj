@@ -6,8 +6,11 @@ socket.on('connect', function(data){
 
 socket.on('yt-result', function(data){
 
+	//Filtrage de la réponse pour ne ressorir uniquement les élements intéréssants
+	data = getHtmlResult(data);
+
 	$('#search-yt-results').html(data);
-	
+
 	$('a').click(function(){
 
 		if(typeof this.href.split('v=')[1] == 'undefined'){
@@ -31,6 +34,41 @@ socket.on('yt-result', function(data){
 
 $('#launch-search').click(launchYtSearch);
 
+/**
+ *	getHtmlResult
+ *
+ *	@param: { string } - Le code html renvoyé par le serveur node
+ *
+ *	@return: { string } - Le code HTML de la réponse épurée
+ */
+function getHtmlResult(data){
+
+	var htmlNinja = '';
+
+	var garbageDom = $.parseHTML(data);
+
+	$(garbageDom).find('.yt-lockup').each(function(){
+
+		$(this).find('button').each(function(){
+			$(this).remove();
+		});
+
+		var linkImage = $(this).find('.yt-lockup-thumbnail').html();
+		var title = $(this).find('.yt-lockup-content').find('a').html();
+		
+		var singleResult = linkImage+title+'<br/><br/><br/>';
+
+		htmlNinja += singleResult;
+	});
+
+	return htmlNinja;
+}
+
+/**
+ *	launchYtSearch
+ *
+ *	Fonction appellé au clic sur le bouton de recherche
+ */
 function launchYtSearch(){
 
 	var inputVal = $('#yt-search').val();
