@@ -1,4 +1,8 @@
+
 var socket = io.connect('192.168.1.86:1337');
+
+//Dispositif anti troll-spammeur. Bloquera les recherches pendant le traitement du serveur d'une recherche
+var searching = false;
 
 socket.on('connect', function(data){
 	socket.emit('screen');
@@ -29,6 +33,9 @@ socket.on('yt-result', function(data){
 			alert('Enjoy');
 		}
 	});
+
+	//Remise à false du bloqueur de recherche
+	searching = false;
 });
 
 
@@ -86,6 +93,14 @@ function getHtmlResult(data){
  *	Fonction appellé au clic sur le bouton de recherche
  */
 function launchYtSearch(){
+
+	//Si l'utilisateur à une recherche en cours, je le kick de la fonction
+	if(searching){
+		return;
+	}
+
+	//Activation du dispositif anti spameur de recherches
+	searching = true;
 
 	var inputVal = $('#yt-search').val();
 
