@@ -54,11 +54,12 @@
 var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
-	path = require('path');
+	path = require('path'),
 	logger = require('express-logger'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
-	audioTools = require('./lib/audioTools');
+	audioTools = require('./lib/audioTools'),
+	clients =  {};
 
 app.set('port', process.env.TEST_PORT || 1337);
 
