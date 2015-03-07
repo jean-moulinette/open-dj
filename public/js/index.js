@@ -1,4 +1,4 @@
-var socket = io.connect('localhost:1337');
+var socket = io.connect('192.168.1.86:1337');
 
 socket.on('connect', function(data){
 	socket.emit('screen');
@@ -47,13 +47,29 @@ function getHtmlResult(data){
 
 	var garbageDom = $.parseHTML(data);
 
-	$(garbageDom).find('.yt-lockup').each(function(){
+	$(garbageDom).find('.yt-lockup').each(function(index){
 
 		$(this).find('button').each(function(){
 			$(this).remove();
 		});
 
-		var linkImage = $(this).find('.yt-lockup-thumbnail').html();
+		var linkImage = $(this).find('.yt-lockup-thumbnail');
+
+		//Forcer le chargement de l'image pour le client
+		if(index > 5){
+
+			var imgForcedSrc = forceImageDisplay(linkImage);
+
+			if(imgForcedSrc !== false){
+				//Remplacement de l'image caché par l'image forcée
+				$(linkImage).find('img').attr('src', imgForcedSrc);
+
+			}
+		}
+
+		//On reparse l'objet jquery en html après le traitement de l'image
+		linkImage = $(linkImage).html();
+
 		var title = $(this).find('.yt-lockup-content').find('a').html();
 		
 		var singleResult = linkImage+title+'<br/><br/><br/>';
@@ -80,4 +96,34 @@ function launchYtSearch(){
 		alert('Et bien ça marche pas avec moi !');
 		alert('En plus je te fais chier avec des alertes LOL AHAHA JE ME MARRE TROP QUOI');
 	}
+}
+
+/**
+ *	forceImageDisplay
+ *
+ *	Fonction de gruge pour forcer les images supérieure à 5 resultats à s'afficher 
+ *	Parceque youtube les affiche uniquement via un script un js quand l'utilisateur
+ *	scroll dans la zone ou se trouve l'image
+ *
+ *	@param: {Jquery object} - le set d'élements qui contient la balise img
+ *
+ *	@return: {mixed} - false si echec/Un string avec le nouveau src en cas de réussite 
+ */
+function forceImageDisplay(videoBlock){
+
+	var imgTag = $(videoBlock).find('img');
+
+	var imgSrcInfo = $(imgTag).attr('src').split('.');
+
+	var ext = imgSrcInfo[(imgSrcInfo.length - 1)];
+
+	//Si l'image n'est pas chargé, le src contient un gif de 1 pixel
+	if(ext === 'gif'){
+
+		//Je remplace le src par la chaine contenue dans data-thumb qui contient le path
+		return $(imgTag).data('thumb');
+	}else{
+		return false;
+	}
+
 }
