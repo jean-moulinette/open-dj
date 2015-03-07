@@ -1,30 +1,36 @@
+<!DOCTYPE html>
 
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>FanghornnTV</title>
-	
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" type="text/css">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-</head>
+<html lang="fr">
 
-<div style="text-align:center;margin-top:5em;">
-	<label>Faire une recherche youtube:</label><br/>
-	<input type="text" id="yt-search"/><br/><br/>
-	<button class="btn btn-danger" id="launch-search">cherche ! cherche !</button>
-</div>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		
+		<title>FanghornnTV</title>
+		
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+	</head>
 
-<div id="search-yt-results" style="text-align:center;margin-top:5em;margin-left:25%;width:50%;height:50%;border:2px,black,solid;border-radius:.2em;">
 
-</div>
+	<body>
+		
+		<div style="text-align:center;margin-top:5em;">
+			<label>Faire une recherche youtube:</label><br/>
+			<input type="text" id="yt-search"/><br/><br/>
+			<button class="btn btn-danger" id="launch-search">Faire une recherche de musique sur youtube</button>
+		</div>
 
-<body>
-	<script src="/socket.io/socket.io.js"> </script>
-	<script src="js/jquery-2.0.1.min.js"> </script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script src="js/jquery.responsiveiframe.js"> </script>
-	<script src="js/index.js"> </script>
-	<script src="js/jquery.mobile-1.4.5.min.js"> </script>
-</body>
+		<div id="search-yt-results" style="text-align:center;margin-top:5em;margin-left:25%;width:50%;height:50%;border:2px,black,solid;border-radius:.2em;"> 
+
+		</div>
+		
+		<script src="/socket.io/socket.io.js"> </script>
+		<script src="js/jquery-2.0.1.min.js"> </script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.responsiveiframe.js"> </script>
+		<script src="js/index.js"> </script>
+
+	</body>
+
 </html>
