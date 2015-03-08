@@ -86,13 +86,14 @@ var ss;
 io.sockets.on('connection', function(socket){
 	
 	//Commande IO init de la connection bidrectionelle avec le client
-	socket.on('screen', function(data){
+	socket.on('new_user', function(data){
 		
-		socket.type = 'screen';
+		console.log('\n Un visiteur vient de se connecter.\n');
+		socket.type = 'new_user';
 
 		//Garde en mémoire le socket screen
 		ss = socket;
-		console.log('\n Un visiteur vient de se connecter.\n');
+
 	});
 
 	//Commande IO de recherche sur youtube
