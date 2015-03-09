@@ -82,6 +82,14 @@ app.get('/remote', function (req, res) {
 
 var ss;
 
+//Objet global au serveur qui sera nourri lors des lectures de musiques
+playingStatus = {
+	on:false,
+	musicTitle:''
+};
+
+
+
 //Le serveur socket.io
 io.sockets.on('connection', function(socket){
 	
@@ -90,6 +98,14 @@ io.sockets.on('connection', function(socket){
 		
 		console.log('\n Un visiteur vient de se connecter.\n');
 		socket.type = 'new_user';
+
+		//Si une musique est déjà en cours
+		if(playingStatus.on){
+
+			//On va envoyer un event au nouveau client pour qu'il voit le titre de la musique actuelle
+			socket.emit('update-current-music', playingStatus.title);
+
+		}
 
 		//Garde en mémoire le socket screen
 		ss = socket;
@@ -114,7 +130,7 @@ io.sockets.on('connection', function(socket){
 		console.log('Demande de lecture reçue par le client\n');
 
 		//Le serveur prends la vidéo et fait le necessaires pour la lire
-		audioTools.audioExist(data);
+		audioTools.audioExist(data, io.sockets);
 
 	});
 

@@ -58,9 +58,7 @@
 			//Filtrage de la réponse pour ne ressorir uniquement les élements intéréssants
 			data = self.getHtmlResult(data);
 
-			$('#search-yt-results').html(data);
-
-			$('a').click(function(event){
+			$('#search-yt-results').html(data).find('a').click(function(event){
 
 				//Stop event original
 				event.preventDefault();
@@ -70,9 +68,12 @@
 					return;
 				}
 
+				var musicTitle = $(this).parent().find('.video-title').text();
+
 				var sendRequestToRpi = {
 					action: 'play',
-					id: this.href.split('v=')[1]
+					id: this.href.split('v=')[1],
+					title: musicTitle
 				};
 
 				if(sendRequestToRpi !== ''){
@@ -123,8 +124,9 @@
 				linkImage = $(linkImage).html();
 
 				var title = $(this).find('.yt-lockup-content').find('a').html();
-				
-				var singleResult = linkImage+title+'<br/><br/><br/>';
+
+				//Création du div corréspondant à un block de resultat youtube
+				var singleResult = '<div class="result-block">'+linkImage+'<span class="video-title">'+title+'</span>'+'</div><br/><br/><br/>';
 
 				htmlNinja += singleResult;
 			});
@@ -159,6 +161,20 @@
 			}else{
 				return false;
 			}		
+		},
+
+		/**
+		 *	updateCurrentMusic
+		 *
+		 *	Fonction de mise à jour du titre de la musique en cours lorsque le serveur va jouer un titre
+		 *	Cette fonction sera potentiellement partagée pour tous les clients connectés en même temps 	
+		 *
+		 *	@param: {string} - title - Le titre de la musique
+		 *
+		 *	@return: {void} - vide néant rien quedalle nada  
+		 */
+		updateCurrentMusic : function(title){
+			$('#playing-now-title').text('    '+title);
 		}
 	
 	};
