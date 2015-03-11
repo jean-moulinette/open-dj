@@ -23,8 +23,6 @@
 				e.preventDefault();
 
 				self.launchYtSearch();
-
-				return false;
 			});
 
 			//Listeners sur les boutons de reglage du volume
@@ -34,8 +32,6 @@
 				e.preventDefault();
 
 				self.modifyVolume(e, 'up');
-
-				return false;
 			});
 			$('#volume-down').on('click', function(e){
 
@@ -43,8 +39,6 @@
 				e.preventDefault();
 
 				self.modifyVolume(e, 'down');
-
-				return false;
 			});
 
 		},
