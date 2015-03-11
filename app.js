@@ -134,7 +134,10 @@ io.sockets.on('connection', function(socket){
 
 	});
 
-
+	//Commande IO de réglage du volume de diffusion de la musique
+	socket.on('modifyVolume', function(choice){
+		audioTools.modifyVolume(choice);
+	});
 
 });
 

@@ -18,7 +18,35 @@
 		//Init
 		initialize : function(){
 			//Mise en place du listener sur le bouton de recherche de vidéos
-			$('#launch-search').click(self.launchYtSearch);
+			$('#launch-search').on('click', function(e){
+
+				e.preventDefault();
+
+				self.launchYtSearch();
+
+				return false;
+			});
+
+			//Listeners sur les boutons de reglage du volume
+			$('#volume-up').on('click', function(e){
+				
+				//Stop event original
+				e.preventDefault();
+
+				self.modifyVolume(e, 'up');
+
+				return false;
+			});
+			$('#volume-down').on('click', function(e){
+
+				//Stop event original
+				e.preventDefault();
+
+				self.modifyVolume(e, 'down');
+
+				return false;
+			});
+
 		},
 
 		/**
@@ -27,6 +55,7 @@
 		 *	Fonction appellé au clic sur le bouton de recherche
 		 */
 		launchYtSearch : function(){
+
 			//Si l'utilisateur à une recherche en cours, je le kick de la fonction
 			if(self.searching){
 				return;
@@ -175,7 +204,20 @@
 		 */
 		updateCurrentMusic : function(title){
 			$('#playing-now-title').text('    '+title);
-		}
+		},
+
+		/**
+		 *	modifyVolume
+		 *
+		 *	Permet de diminuer/augmenter le volume de la musique diffusée 	
+		 *
+		 *	@param: {string} - choice - up/down 
+		 *
+		 *	@return: {void}
+		 */
+		modifyVolume : function(event, choice){
+			SocketManager.conn.emit('modifyVolume', choice);
+		}		
 	
 	};
 
