@@ -83,6 +83,10 @@
 				self.searching = true;
 	
 				SocketManager.conn.emit('yt-search', inputVal);
+
+				//Mise en place de l'overlay de patience
+				self.toggleOverlay();
+
 			}else{
 				alertify.error('Tu veux faire une recherche vide ...?<br/>Tu vas pas trouver grand chose..');
 			}
@@ -127,6 +131,9 @@
 
 			//Remise à false du bloqueur de recherche
 			self.searching = false;		
+
+			//Je botte le cul de l'overlay de patience
+			self.toggleOverlay();
 		},
 
 		/**
@@ -230,7 +237,37 @@
 		 */
 		modifyVolume : function(event, choice){
 			SocketManager.conn.emit('modifyVolume', choice);
-		}		
+		},
+
+		/**
+		 *	loading
+		 *
+		 *	fonction permettant la mise en place d'un overlay bloquant
+		 *
+		 *	Pompée sur le fiddle  http://jsfiddle.net/eys3d/402/
+		 *
+		 *	@param: {void}
+		 *
+		 *	@return: {void}
+		 */
+		toggleOverlay : function() {
+
+			//Si l'overlay est detecté on l'enléve à l'appel de la fonction
+			if($('#overlay').length > 0){
+				
+				$('#overlay').remove();
+
+				return;
+			}
+
+			// add the overlay with loading image to the page
+			var over = '<div id="overlay">' +
+			'<img id="loading" src="images/squares.gif">Chargement en cours...' +
+			'</div>';
+			
+			$(over).appendTo('body');
+
+		}
 	
 	};
 
