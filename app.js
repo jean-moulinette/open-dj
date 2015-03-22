@@ -85,7 +85,8 @@ var ss;
 //Objet global au serveur qui sera nourri lors des lectures de musiques
 playingStatus = {
 	on:false,
-	musicTitle:''
+	musicTitle:'',
+	paused:false
 };
 
 
@@ -137,6 +138,46 @@ io.sockets.on('connection', function(socket){
 	//Commande IO de réglage du volume de diffusion de la musique
 	socket.on('modifyVolume', function(choice){
 		audioTools.modifyVolume(choice);
+	});
+
+	//Commande IO de mise en pause de la lecture
+	socket.on('pause', function(data){
+
+		//Si le lecteur du serveur n'est pas deja en pause, on peut continuer
+		if(!playingStatus.paused){
+
+			var messageObject = {
+				command:'pause'
+			};
+
+			//Envoi de la commande de pause au child process
+			playingStatus.process.send(messageObject);
+
+			//Mise à jour de l'objet représentant la lecture de la musique sur le serveur
+			playingStatus.paused = true;			
+		}
+
+	});
+
+
+	//Commande IO de remise en marche de la lecture
+	socket.on('resume', function(data){
+
+		//Si le lecteur du serveur est en pause
+		if(playingStatus.paused){
+
+			var messageObject = {
+				command:'resume'
+			};
+
+			//Envoi de la commande de remise en marche du lecteur serveur
+			playingStatus.process.send(messageObject);
+
+			//Mise à jour de l'objet représentant la lecture de la musique sur le serveur
+			playingStatus.paused = false;
+
+		}
+
 	});
 
 });
