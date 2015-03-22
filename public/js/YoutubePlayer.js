@@ -51,6 +51,15 @@
 
 			});
 
+			//Commande de remise en lecture de la musique
+			$('#music-resume').on('click', function(e){
+				
+				//Stop event original
+				e.preventDefault();
+
+				SocketManager.conn.emit('resume');
+
+			});
 		},
 
 		/**
