@@ -17,7 +17,7 @@
 
 			//Listener de connection établie
 			self.conn.on('connect', function(data){
-				
+
 				self.conn.emit('new_user');
 
 				//Permet de ne pas init deux fois sur le même client (voir definitition de l'attribut)

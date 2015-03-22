@@ -41,6 +41,16 @@
 				self.modifyVolume(e, 'down');
 			});
 
+			//Commande de mise en pause de la musique
+			$('#music-pause').on('click', function(e){
+				
+				//Stop event original
+				e.preventDefault();
+
+				SocketManager.conn.emit('pause');
+
+			});
+
 		},
 
 		/**
