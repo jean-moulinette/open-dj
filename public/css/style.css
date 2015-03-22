@@ -9,7 +9,7 @@ background-color: #5cbf94;
  *	Pompés sur le fiddle http://jsfiddle.net/eys3d/402/
  */
 #overlay {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     bottom: 0;

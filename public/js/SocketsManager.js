@@ -39,6 +39,22 @@
 				YoutubePlayer.updateCurrentMusic(data);
 			});
 
+			//Listener de musique en cours de téléchargement sur le serveur
+			self.conn.on('download-start', function(data){
+
+				//Mise en place d'loverlay d'attente pour les clients
+				YoutubePlayer.toggleOverlay();
+
+			});
+
+			//Listener de fin de téléchargement
+			self.conn.on('download-over', function(data){
+				
+				//Enlevement de l'overlay d'attente chez les clients	
+				YoutubePlayer.toggleOverlay();
+			
+			});
+
 		}
 
 	};

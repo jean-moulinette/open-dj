@@ -262,7 +262,7 @@
 
 			// add the overlay with loading image to the page
 			var over = '<div id="overlay">' +
-			'<img id="loading" src="images/squares.gif">Chargement en cours...' +
+			'<img id="loading" src="images/squares.gif">' +
 			'</div>';
 			
 			$(over).appendTo('body');

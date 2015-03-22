@@ -82,9 +82,17 @@ app.get('/remote', function (req, res) {
 
 var ss;
 
-//Objet global au serveur qui sera nourri lors des lectures de musiques
+/**
+ *	Objet global au serveur qui sera nourri lors des lectures de musiques
+ *
+ *	on - { boolean } - true si une lecture est en cours
+ *	managing - { boolean } - true si le serveur est en train de traiter une demande
+ *	musicTitle - { string } - Titre de la musique en cours
+ *	paused - { boolean } - true si la musique est en pause
+ */
 playingStatus = {
 	on:false,
+	managing:false,
 	musicTitle:'',
 	paused:false
 };
@@ -130,8 +138,16 @@ io.sockets.on('connection', function(socket){
 		console.log('*****************************');
 		console.log('Demande de lecture reçue par le client\n');
 
-		//Le serveur prends la vidéo et fait le necessaires pour la lire
-		audioTools.audioExist(data, io.sockets);
+		//Si le serveur n'est pas déjà en train de traiter une demande
+		if(!playingStatus.managing){
+
+			//On indique que le serveur est en train de traiter une demande
+			playingStatus.managing = true;
+
+			//Le serveur prends la vidéo et fait le necessaires pour la lire
+			audioTools.audioExist(data, io.sockets);
+			
+		}
 
 	});
 
