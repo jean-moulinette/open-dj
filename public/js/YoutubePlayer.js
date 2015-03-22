@@ -74,17 +74,16 @@
 				return;
 			}
 
-			//Activation du dispositif anti spameur de recherches
-			self.searching = true;
-
 			var inputVal = $('#yt-search').val();
 
 			if(inputVal !== ''){
+	
+				//Activation du dispositif anti spameur de recherches
+				self.searching = true;
+	
 				SocketManager.conn.emit('yt-search', inputVal);
 			}else{
-				alert('Tu veux faire une recherche vide ...?');
-				alert('Et bien ça marche pas avec moi !');
-				alert('En plus je te fais chier avec des alertes LOL AHAHA JE ME MARRE TROP QUOI');
+				alertify.error('Tu veux faire une recherche vide ...?<br/>Tu vas pas trouver grand chose..');
 			}
 		},
 
@@ -106,7 +105,7 @@
 				event.preventDefault();
 
 				if(typeof this.href.split('v=')[1] == 'undefined'){
-					alert('On dirais que t\'as choisis autre chose qu\'une video(chaine youtube ou autre), ça va pas marcher :(\nEssayes encore =D');
+					alertify.error('On dirais que t\'as choisis autre chose qu\'une video(chaine youtube ou autre), ça va pas marcher :(<br/>Essayes encore =D');
 					return;
 				}
 
@@ -121,7 +120,7 @@
 				if(sendRequestToRpi !== ''){
 					SocketManager.conn.emit('video', sendRequestToRpi);
 
-					alert('Enjoy');
+					alertify.message('Lancement de la musique !');
 				}
 			});
 
