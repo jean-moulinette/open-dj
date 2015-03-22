@@ -17,6 +17,7 @@
 
 		//Init
 		initialize : function(){
+			
 			//Mise en place du listener sur le bouton de recherche de vidéos
 			$('#launch-search').on('click', function(e){
 
@@ -120,7 +121,7 @@
 				if(sendRequestToRpi !== ''){
 					SocketManager.conn.emit('video', sendRequestToRpi);
 
-					alertify.message('Lancement de la musique !');
+					 alertify.warning('Envoi de la demande de lecture !');
 				}
 			});
 
