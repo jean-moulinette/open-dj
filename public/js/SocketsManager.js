@@ -10,6 +10,9 @@
 		//Passera à true quand la classe YoutubePlayer sera initialisée (Permet d'eviter les conficts lorsque la connection sockets à perimée)
 		youtubePlayerInitialized : false,
 
+		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
+		musicToForce : null,
+
 		initialize : function(){
 
 			//Etablissement de la connection bidrectionelle entre le serveur et le clients présent
@@ -55,6 +58,57 @@
 			
 			});
 
+			//Listener d'annonce serveur
+			self.conn.on('annoucement', function(annoucement){
+
+				//Fais apparaitre une annonce via alertify
+				alertify.warning(annoucement);
+
+			});
+
+			//Listener de demande de confirmation pour forcer le changement de la musique en cours
+			self.conn.on('ask-force', function(music){
+
+				self.musicToForce = music;
+
+				var confirmMessage = 'Une musique est déjà en cours de lecture !<br/>Tu veux forcer le changement ..?';
+
+				//On fait apparaitre l'alerte
+				alertify.confirm().set({
+
+					message:confirmMessage,
+
+					onok:self.askForceOnOk,
+
+					labels:{
+						ok:'Fait péter le son !',
+						cancel:'Non merci'
+					},
+
+					title:'Woops !'
+
+				}).show(); 
+
+			});
+
+		},
+
+		/**
+		 *	askForceOnOk
+		 *
+		 *	Fonction déclenchée lorsque l'utilisateur confirme le changement d'une musique par une autre 
+		 *	Voir commande io ask-force
+		 *
+		 *	@param: void
+		 *	@return: void
+		 */
+		askForceOnOk : function(){
+
+			self.conn.emit('forceChange', self.musicToForce);
+
+			self.musicToForce = null;
+
+			alertify.warning('Demande envoyée !');
 		}
 
 	};

@@ -61,6 +61,17 @@
 				SocketManager.conn.emit('resume');
 
 			});
+
+			//ask-server
+			$('#ask-server').on('click', function(e){
+
+				//Stop event original
+				e.preventDefault();
+
+				SocketManager.conn.emit('ask-server');
+
+			});
+
 		},
 
 		/**
@@ -111,6 +122,7 @@
 
 				if(typeof this.href.split('v=')[1] == 'undefined'){
 					alertify.error('On dirais que t\'as choisis autre chose qu\'une video(chaine youtube ou autre), ça va pas marcher :(<br/>Essayes encore =D');
+					
 					return;
 				}
 
@@ -122,10 +134,11 @@
 					title: musicTitle
 				};
 
+				//On communique au serveur la vidéo à télécharger et lire sur les hauts parleurs, il fera le café tout seul
 				if(sendRequestToRpi !== ''){
+
 					SocketManager.conn.emit('video', sendRequestToRpi);
 
-					 alertify.warning('Envoi de la demande de lecture !');
 				}
 			});
 

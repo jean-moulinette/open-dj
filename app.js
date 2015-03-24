@@ -89,22 +89,22 @@ var ss;
  *	managing - { boolean } - true si le serveur est en train de traiter une demande
  *	musicTitle - { string } - Titre de la musique en cours
  *	paused - { boolean } - true si la musique est en pause
+ *	process - { Child Process } - Le child process de lecture de la musique
  */
 playingStatus = {
 	on:false,
 	managing:false,
 	musicTitle:'',
-	paused:false
+	paused:false,
+	process:null
 };
-
-
 
 //Le serveur socket.io
 io.sockets.on('connection', function(socket){
-	
+
 	//Commande IO init de la connection bidrectionelle avec le client
 	socket.on('new_user', function(data){
-		
+
 		console.log('\n Un visiteur vient de se connecter.\n');
 		socket.type = 'new_user';
 
@@ -133,10 +133,21 @@ io.sockets.on('connection', function(socket){
 
 	//Commande IO de récéption d'une requête vidéo spécifique youtube à lire
 	socket.on('video', function(data){
-		
+
 		console.log('\n\n*****************************');
 		console.log('*****************************');
 		console.log('Demande de lecture reçue par le client\n');
+
+		//Si une musique est déjà en cours de lecture
+		if(playingStatus.on){
+
+			//On va envoyer une notification au socket pour savoir si il veut kick le son en cours
+			socket.emit('ask-force', data);
+
+			//On sort de la fonction sinon ça va lancer le son en double..
+			return;
+
+		}
 
 		//Si le serveur n'est pas déjà en train de traiter une demande
 		if(!playingStatus.managing){
@@ -145,19 +156,48 @@ io.sockets.on('connection', function(socket){
 			playingStatus.managing = true;
 
 			//Le serveur prends la vidéo et fait le necessaires pour la lire
-			audioTools.audioExist(data, io.sockets);
-			
+			audioTools.audioExist(data, io.sockets, false);
+
 		}
 
 	});
 
+	//Commande IO de changement de musique en cours
+	socket.on('forceChange', function(data){
+
+		console.log('Un client souhaite forcer le changement d\'une musique en cours de lecture');
+
+		//On indique que le serveur est en train de traiter une demande
+		playingStatus.managing = true;
+
+		//Le serveur prends la vidéo et fait le necessaires pour la lire
+		audioTools.audioExist(data, io.sockets, true);	
+	
+	});
+
 	//Commande IO de réglage du volume de diffusion de la musique
 	socket.on('modifyVolume', function(choice){
+
+		if(!playingStatus.on){
+
+			socket.emit('annoucement', 'Aucune musique n\'est en cours de lecture.');
+
+			return;
+		}
+
 		audioTools.modifyVolume(choice);
+	
 	});
 
 	//Commande IO de mise en pause de la lecture
 	socket.on('pause', function(data){
+
+		if(!playingStatus.on){
+
+			socket.emit('annoucement', 'Aucune musique n\'est en cours de lecture.');
+
+			return;
+		}
 
 		//Si le lecteur du serveur n'est pas deja en pause, on peut continuer
 		if(!playingStatus.paused){
@@ -175,9 +215,15 @@ io.sockets.on('connection', function(socket){
 
 	});
 
-
 	//Commande IO de remise en marche de la lecture
 	socket.on('resume', function(data){
+
+		if(!playingStatus.on){
+
+			socket.emit('annoucement', 'Aucune musique n\'est en cours de lecture.');
+
+			return;
+		}
 
 		//Si le lecteur du serveur est en pause
 		if(playingStatus.paused){
@@ -193,6 +239,17 @@ io.sockets.on('connection', function(socket){
 			playingStatus.paused = false;
 
 		}
+
+	});
+
+	socket.on('ask-server', function(){
+		
+		console.log('playingStatus :\n');
+
+		console.log('on :'+playingStatus.on+'\n');
+		console.log('managing :'+playingStatus.managing+'\n');
+		console.log('musicTitle :'+playingStatus.musicTitle+'\n');
+		console.log('paused :'+playingStatus.paused+'\n');
 
 	});
 
