@@ -93,7 +93,7 @@ var ss;
  */
 playingStatus = {
 	on:false,
-	managing:false,
+	downloading:false,
 	musicTitle:'',
 	paused:false,
 	process:null
@@ -114,7 +114,7 @@ io.sockets.on('connection', function(socket){
 			//On indique le titre au nouveau client
 			socket.emit('update-current-music', playingStatus.musicTitle);
 
-		}else if(playingStatus.managing){//Si aucune musique n'est en cours mais que le serveur est en train de traiter une demande
+		}else if(playingStatus.downloading){//Si aucune musique n'est en cours mais que le serveur est en train de traiter une demande
 
 			//On lui colle un overlay avec un titre de musique indiquant le téléchargement en cours
 			socket.emit('update-current-music', 'downloading');			
@@ -155,10 +155,10 @@ io.sockets.on('connection', function(socket){
 		}
 
 		//Si le serveur n'est pas déjà en train de traiter une demande
-		if(!playingStatus.managing){
+		if(!playingStatus.downloading){
 
 			//On indique que le serveur est en train de traiter une demande
-			playingStatus.managing = true;
+			playingStatus.downloading = true;
 
 			//Le serveur prends la vidéo et fait le necessaires pour la lire
 			audioTools.audioExist(data, io.sockets, false);
@@ -173,7 +173,7 @@ io.sockets.on('connection', function(socket){
 		console.log('Un client souhaite forcer le changement d\'une musique en cours de lecture');
 
 		//On indique que le serveur est en train de traiter une demande
-		playingStatus.managing = true;
+		playingStatus.downloading = true;
 
 		//Le serveur prends la vidéo et fait le necessaires pour la lire
 		audioTools.audioExist(data, io.sockets, true);	
@@ -252,7 +252,7 @@ io.sockets.on('connection', function(socket){
 		console.log('playingStatus :\n');
 
 		console.log('on :'+playingStatus.on+'\n');
-		console.log('managing :'+playingStatus.managing+'\n');
+		console.log('downloading :'+playingStatus.managing+'\n');
 		console.log('musicTitle :'+playingStatus.musicTitle+'\n');
 		console.log('paused :'+playingStatus.paused+'\n');
 
