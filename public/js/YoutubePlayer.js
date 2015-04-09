@@ -32,10 +32,27 @@
 
 				e.preventDefault();
 
+				//Lancement de la fonction de recherche de vidéos de la classe 
 				self.launchYtSearch();
 
-				//On remet à 0 l'espion de navigation entre les pages de résultats
-				self.currentPage = 0;
+			});
+
+			//Listener touche entrée pour lancer aussi la recherche de vidéos
+			$(document).on('keyup', function(e){
+
+				//Si l'utilisateur est en focus sur l'input texte
+				if($('#yt-search').is(':focus')){
+
+					var code = e.keyCode || e.which;
+
+					if(code == 13){
+						e.preventDefault();
+
+						//Lancement de la fonction de recherche de vidéos de la classe 
+						self.launchYtSearch();
+					}
+
+				}
 
 			});
 
@@ -111,6 +128,9 @@
 				return;
 			}
 
+			//On remet à 0 l'espion de navigation entre les pages de résultats
+			self.currentPage = 0;
+
 			var inputVal = $('#yt-search').val();
 
 			if(inputVal !== ''){
@@ -127,7 +147,7 @@
 				self.toggleOverlay();
 
 			}else{
-				alertify.error('Tu veux faire une recherche vide ...?<br/>Tu vas pas trouver grand chose..');
+				alertify.error('Tu veux faire une recherche vide ...?<br/>Tu vas pas trouver grand chose mon pote.');
 			}
 		},
 
@@ -255,6 +275,7 @@
 
 				//Je remplace le src par la chaine contenue dans data-thumb qui contient le path
 				return $(imgTag).data('thumb');
+
 			}else{
 				return false;
 			}		
