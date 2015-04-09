@@ -43,3 +43,8 @@ background-color: #5cbf94;
 .ajs-modal{
 	z-index:2000 !important;
 }
+
+.hidden{
+	display:none;
+	visibiliy:hidden;
+}

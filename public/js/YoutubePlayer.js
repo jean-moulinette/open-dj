@@ -15,6 +15,15 @@
 		//Detecteur de musique en cours de lecutre
 		playing :  false,
 
+		//Sauvegare le nombre de resultat envoyé par youtube
+		resultsCount : 0,
+
+		//Garde en mémoire la page de résultats en cours de visualisation
+		currentPage : 0,
+
+		//Sauvegarde de la derniere recherche effectuée
+		lastSearchedPattern : null,
+
 		//Init
 		initialize : function(){
 			
@@ -24,6 +33,10 @@
 				e.preventDefault();
 
 				self.launchYtSearch();
+
+				//On remet à 0 l'espion de navigation entre les pages de résultats
+				self.currentPage = 0;
+
 			});
 
 			//Listeners sur les boutons de reglage du volume
@@ -33,13 +46,16 @@
 				e.preventDefault();
 
 				self.modifyVolume(e, 'up');
+
 			});
+
 			$('#volume-down').on('click', function(e){
 
 				//Stop event original
 				e.preventDefault();
 
 				self.modifyVolume(e, 'down');
+
 			});
 
 			//Commande de mise en pause de la musique
@@ -72,6 +88,15 @@
 
 			});
 
+			//Listeners de navigation entre les pages
+			$('#page-prev').on('click', function(){
+				self.getPage('-');
+			});
+			$('#page-next').on('click', function(){
+				self.getPage('+');
+			});
+
+
 		},
 
 		/**
@@ -92,6 +117,9 @@
 	
 				//Activation du dispositif anti spameur de recherches
 				self.searching = true;
+
+				//Mise en mémoire de la recherche dans la classe YoutubePlayer
+				self.lastSearchedPattern = inputVal;
 	
 				SocketManager.conn.emit('yt-search', inputVal);
 
@@ -140,6 +168,7 @@
 					SocketManager.conn.emit('video', sendRequestToRpi);
 
 				}
+
 			});
 
 			//Remise à false du bloqueur de recherche
@@ -157,6 +186,9 @@
 		 *	@return: { string } - Le code HTML de la réponse épurée
 		 */
 		getHtmlResult : function(data){
+
+			//Remise à 0 du compteur de résultat
+			self.resultsCount = 0;
 
 			var htmlNinja = '';
 
@@ -189,6 +221,9 @@
 
 				//Création du div corréspondant à un block de resultat youtube
 				var singleResult = '<div class="result-block">'+linkImage+'<span class="video-title">'+title+'</span>'+'</div><br/><br/><br/>';
+
+				//Increment du compteur de resultats de la classe
+				self.resultsCount++;
 
 				htmlNinja += singleResult;
 			});
@@ -236,6 +271,16 @@
 		 *	@return: {void} - vide néant rien quedalle nada  
 		 */
 		updateCurrentMusic : function(title){
+
+			//Si le client vient d'arriver et que le serveur lui indique qu'une musique est deja en cours de téléchargement
+			if(title === 'downloading'){
+				//On donne l'infos dans le menu headr
+				title = 'Téléchargement d\'une musique en cours...';
+
+				//Et il prend l'overlay bloquant dans sa trogne
+				self.toggleOverlay();
+			}
+
 			$('#playing-now-title').text('    '+title);
 		},
 
@@ -280,6 +325,19 @@
 			
 			$(over).appendTo('body');
 
+		},
+
+		/**
+		 *	getPage
+		 *
+		 *	fonction permettant la navigation dans les pages de resultats
+		 *
+		 *	@param: cmd - {string} - + ou -
+		 *
+		 *	@return: {void}
+		 */
+		getPage : function(cmd){
+			console.log(cmd);
 		}
 	
 	};

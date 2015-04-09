@@ -32,9 +32,24 @@
 				self.youtubePlayerInitialized = true;
 			});
 
-			//Listener d'envoi de la réponse de la recherche 
+			//Listener de récupération de resultat de recherche
 			self.conn.on('yt-result', function(data){
-				YoutubePlayer.YtSearchResponse(data);
+				
+				//Lancement de la fonction de récupération du code HTML de la recherhce
+				YoutubePlayer.YtSearchResponse(data.result);
+
+				//Si on à 20 résultats dans la recherche
+				if(YoutubePlayer.resultsCount === 20){
+					
+					$('#yt-result-scroller').toggleClass('hidden');
+					
+					//Si on est sur la premiere page de resultat, et que le bouton suivant n'est pas visible, on l'affiche
+					if(YoutubePlayer.currentPage === 0 && !$('#page-next').is(':visible')){
+						$('#page-next').toggleClass('hidden');
+					}
+
+				}
+
 			});
 
 			//Listener de mise à jour de la musique en cours de lecture
@@ -54,7 +69,9 @@
 			self.conn.on('download-over', function(data){
 				
 				//Enlevement de l'overlay d'attente chez les clients	
-				YoutubePlayer.toggleOverlay();
+				if($('#overlay').is(':visible')){
+					YoutubePlayer.toggleOverlay();
+				}
 			
 			});
 
