@@ -108,17 +108,16 @@ io.sockets.on('connection', function(socket){
 		console.log('\n Un visiteur vient de se connecter.\n');
 		socket.type = 'new_user';
 
-		//Si une musique est déjà en cours ou que le serveur est en train de traiter une demande
-		if(playingStatus.on || playingStatus.managing){
+		//Si une musique est déjà en cours
+		if(playingStatus.on){
 
-			//Si le serveur est en train de télécharger une musique
-			if(playingStatus.managing){
-				//On lui colle(au client) l'overlay dans la tête via un event socket
-				socket.emit('update-current-music', 'downloading');
-			}else{
-				//Sinon, on va envoyer un event au nouveau client pour qu'il voit le titre de la musique actuelle
-				socket.emit('update-current-music', playingStatus.musicTitle);
-			}
+			//On indique le titre au nouveau client
+			socket.emit('update-current-music', playingStatus.musicTitle);
+
+		}else if(playingStatus.managing){//Si aucune musique n'est en cours mais que le serveur est en train de traiter une demande
+
+			//On lui colle un overlay avec un titre de musique indiquant le téléchargement en cours
+			socket.emit('update-current-music', 'downloading');			
 
 		}
 
