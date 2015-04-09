@@ -117,7 +117,7 @@ io.sockets.on('connection', function(socket){
 				socket.emit('update-current-music', 'downloading');
 			}else{
 				//Sinon, on va envoyer un event au nouveau client pour qu'il voit le titre de la musique actuelle
-				socket.emit('update-current-music', playingStatus.title);
+				socket.emit('update-current-music', playingStatus.musicTitle);
 			}
 
 		}
