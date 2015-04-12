@@ -75,13 +75,6 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/public/index.html');
 });
 
-app.get('/remote', function (req, res) {
-  res.sendfile(__dirname + '/public/remote.html');
-});
-
-
-var ss;
-
 /**
  *	Objet global au serveur qui sera nourri lors des lectures de musiques
  *
@@ -99,7 +92,15 @@ playingStatus = {
 	process:null
 };
 
-//Le serveur socket.io
+/**
+ *	Initialisation du serveur IO
+ *
+ *	Attachement des event listeners sur les connexions sockets
+ *
+ *	Event : Connection @return : { Obj } socket 
+ *	[L'objet représentant une connection bidirectionnelle établie entre la machine cliente et le serveur node.]
+ *
+ **/
 io.sockets.on('connection', function(socket){
 
 	//Commande IO init de la connection bidrectionelle avec le client
@@ -120,9 +121,6 @@ io.sockets.on('connection', function(socket){
 			socket.emit('update-current-music', 'downloading');			
 
 		}
-
-		//Garde en mémoire le socket screen
-		ss = socket;
 
 	});
 
@@ -252,7 +250,7 @@ io.sockets.on('connection', function(socket){
 		console.log('playingStatus :\n');
 
 		console.log('on :'+playingStatus.on+'\n');
-		console.log('downloading :'+playingStatus.managing+'\n');
+		console.log('downloading :'+playingStatus.downloading+'\n');
 		console.log('musicTitle :'+playingStatus.musicTitle+'\n');
 		console.log('paused :'+playingStatus.paused+'\n');
 
