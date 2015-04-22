@@ -19,10 +19,7 @@
 		resultsCount : 0,
 
 		//Garde en mémoire la page de résultats en cours de visualisation
-		currentPage : 0,
-
-		//Sauvegarde de la derniere recherche effectuée
-		lastSearchedPattern : null,
+		currentPage : 1,
 
 		//Init
 		initialize : function(){
@@ -95,6 +92,16 @@
 
 			});
 
+			//Listener download-song qui permet de télècharger une musique en cours de lecture
+			$('#music-download').on('click',function(e){
+
+				//Stop event original
+				e.preventDefault();
+
+				SocketManager.conn.emit('music-download');
+
+			});
+
 			//ask-server
 			$('#ask-server').on('click', function(e){
 
@@ -129,7 +136,7 @@
 			}
 
 			//On remet à 0 l'espion de navigation entre les pages de résultats
-			self.currentPage = 0;
+			self.currentPage = 1;
 
 			var inputVal = $('#yt-search').val();
 
@@ -329,7 +336,7 @@
 		 *
 		 *	@return: {void}
 		 */
-		toggleOverlay : function() {
+		toggleOverlay : function(){
 
 			//Si l'overlay est detecté on l'enléve à l'appel de la fonction
 			if($('#overlay').length > 0){
@@ -358,7 +365,17 @@
 		 *	@return: {void}
 		 */
 		getPage : function(cmd){
-			console.log(cmd);
+			
+			//Mise en place de l'overlay d'attente
+			self.toggleOverlay();
+
+			if(cmd === '+'){
+				self.currentPage++;
+			}else{
+				self.currentPage--;
+			}
+
+			SocketManager.pageSwitch(self.currentPage);
 		}
 	
 	};

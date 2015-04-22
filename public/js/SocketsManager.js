@@ -36,17 +36,40 @@
 			self.conn.on('yt-result', function(data){
 				
 				//Lancement de la fonction de récupération du code HTML de la recherhce
-				YoutubePlayer.YtSearchResponse(data.result);
+				YoutubePlayer.YtSearchResponse(data.result);	
 
-				//Si on à 20 résultats dans la recherche
-				if(YoutubePlayer.resultsCount === 20){
-					
+				//Si le scroller de page n'est pas visible
+				if( !$('#yt-result-scroller').is(':visible') ){
+
 					$('#yt-result-scroller').toggleClass('hidden');
+				
+				}  
+				
+				//Si on est sur la premiere page de resultat, et que le bouton suivant n'est pas visible, on l'affiche
+				//Sinon on vérifie toujours qu'il est bien visible pour les autres pages si le nombre de résultats est égal à 20
+				if(YoutubePlayer.currentPage == 1  && YoutubePlayer.resultsCount == 20 || YoutubePlayer.currentPage >= 2 && YoutubePlayer.resultsCount == 20){
 					
-					//Si on est sur la premiere page de resultat, et que le bouton suivant n'est pas visible, on l'affiche
-					if(YoutubePlayer.currentPage === 0 && !$('#page-next').is(':visible')){
+					if( !$('#page-next').is(':visible') ){
+						
 						$('#page-next').toggleClass('hidden');
+					
 					}
+				
+				}
+
+				//A partir de la deuxieme page, on affiche le bouton precedant
+				if(YoutubePlayer.currentPage >= 2){
+
+					if( !$('#page-prev').is(':visible') ){
+
+						$('#page-prev').toggleClass('hidden');
+
+					}
+				
+				}else if(YoutubePlayer.currentPage === 1 && $('#page-prev').is(':visible')){
+
+					//Si on est sur la premiere page de resultats et que le bouton "précédent est visible, on le cache"
+					$('#page-prev').toggleClass('hidden');
 
 				}
 
@@ -126,7 +149,23 @@
 			self.musicToForce = null;
 
 			alertify.warning('Demande envoyée !');
+		},
+
+		/**
+		 *	pageSwtich
+		 *
+		 *	Fonction permettant de ramener de nouvelles pages d'une même recherche
+		 *
+		 *	@param: { int } - le numéro de la page
+		 *
+		 *	@return: { void } 
+		 */
+		pageSwitch : function(index){
+
+			self.conn.emit('result-page-change', index);
+
 		}
+
 
 	};
 

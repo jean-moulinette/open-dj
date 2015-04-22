@@ -85,11 +85,19 @@ app.get('/', function (req, res) {
  *	process - { Child Process } - Le child process de lecture de la musique
  */
 playingStatus = {
+
 	on:false,
+
 	downloading:false,
+
+	songId:null,
+
 	musicTitle:'',
+
 	paused:false,
+
 	process:null
+
 };
 
 /**
@@ -107,7 +115,7 @@ io.sockets.on('connection', function(socket){
 	socket.on('new_user', function(data){
 
 		console.log('\n Un visiteur vient de se connecter.\n');
-		socket.type = 'new_user';
+		socket.patternSearched = null;
 
 		//Si une musique est déjà en cours
 		if(playingStatus.on){
@@ -127,10 +135,24 @@ io.sockets.on('connection', function(socket){
 	//Commande IO de recherche sur youtube
 	socket.on('yt-search', function(data){
 
+		//Remise à zero de l'espion de recherche
+		socket.patternSearched = null;
+
 		console.log('\n Un client cherche une vidéo. \n');
 
 		//Envoi des résultats de la recherche au client par le serveur
 		audioTools.searchVideo(data, socket);
+
+	});
+
+	socket.on('result-page-change', function(data){
+
+		console.log('data dans result-page-change + pattern:');
+		console.log('data: '+data+' pattern: '+socket.patternSearched);
+
+		//Envoi d'une nouvelle requette avec data comme pour numéro de page de résulrat
+		//On récupere socket.patternSearched qui à pris sa valeur dans audioTools.searchVideo lors de la première recherche
+		audioTools.searchVideo(socket.patternSearched+'&page='+data, socket);
 
 	});
 
@@ -245,14 +267,35 @@ io.sockets.on('connection', function(socket){
 
 	});
 
-	socket.on('ask-server', function(){
+	//Event listener de téléchargement d'une musique en cours de lecture
+	socket.on('music-download', function(){
+
+		console.log('Un client demande le téléchargement d\'une musique');
 		
+		//Si aucune musique en cours de lecture, on fait péter un message d'erreur
+		if(!playingStatus.on){
+		
+			socket.emit('annoucement', 'Aucune musique n\'est en cours de lecture.');
+		
+			return;
+
+		}else{
+			//Placer ici une fonction d'envoi du fichier au socket lolz
+			//audioTools.downloadCurrentSong();
+		}
+
+	
+	});
+
+	socket.on('ask-server', function(){
+
 		console.log('playingStatus :\n');
 
 		console.log('on :'+playingStatus.on+'\n');
 		console.log('downloading :'+playingStatus.downloading+'\n');
 		console.log('musicTitle :'+playingStatus.musicTitle+'\n');
 		console.log('paused :'+playingStatus.paused+'\n');
+		console.log('songId :'+playingStatus.songId+'\n');
 
 	});
 
