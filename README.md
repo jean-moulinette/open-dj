@@ -50,6 +50,15 @@ Setting the server's local ip adress in the client script:
     Where the io.connect('local ip adresse'); statement is.
 
 ---------------------------------------------------
+  
+Installing npm dependencies:
+  
+----------------------------------------------------
+    
+    sudo npm install
+    
+----------------------------------------------------
+
 
 Running the app:
 
