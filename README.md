@@ -16,11 +16,20 @@ Screw you Apple
   
 Youtube-dl:
   
-----------------------------------------------------
-    apt-get install youtube-dl
-    youtube-dl - U 
-    //youtube-dl must be up to date with the "youtube-dl -U command" 
-----------------------------------------------------
+---------------------------------------------------
+
+    sudo curl https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl
+    sudo chmod a+x /usr/local/bin/youtube-dl
+
+---------------------------------------------------
+
+If you do not have curl, you can alternatively use a recent wget:
+
+    sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+    sudo chmod a+x /usr/local/bin/youtube-dl
+
+---------------------------------------------------
+
 see https://github.com/rg3/youtube-dl/ for more infos
   
   
