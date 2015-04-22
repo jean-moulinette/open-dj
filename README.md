@@ -2,6 +2,8 @@
 
 A simple personnal DIY node.js server which aim to make your local speakers accessible from web clients.
 
+Please note that this project is for fun and learning, nothing serious.
+
 ## OS Support
 
 No windows
