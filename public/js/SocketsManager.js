@@ -16,7 +16,7 @@
 		initialize : function(){
 
 			//Etablissement de la connection bidrectionelle entre le serveur et le clients présent
-			self.conn = io.connect('127.0.0.1:1337');
+			self.conn = io.connect('192.168.1.86:1337');
 
 			//Listener de connection établie
 			self.conn.on('connect', function(data){
