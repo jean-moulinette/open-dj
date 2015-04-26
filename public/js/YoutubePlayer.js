@@ -28,7 +28,7 @@
 			$(".button-collapse").sideNav();
 			
 			//Mise en place du listener sur le bouton de recherche de vidéos
-			$('.launch-search').on('click', function(e){
+			$('#launch-search').on('click', function(e){
 
 				e.preventDefault();
 
