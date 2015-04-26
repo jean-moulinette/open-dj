@@ -304,6 +304,6 @@ io.sockets.on('connection', function(socket){
 //Ouverture des vannes TCP !
 server.listen(app.get('port'), function(){
 
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log('Open-dj is running on port ' + app.get('port'));
 
 });
