@@ -8,7 +8,7 @@
 		
 		<title>FanghornnTV</title>
 		
-		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/materialize.css" rel="stylesheet">
 		<link href="css/alertify.min.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 	</head>
@@ -16,94 +16,90 @@
 
 	<body>
 
-		<nav class="navbar navbar-default navbar-fixed-top">
-			
-			<div class="container">
+		<nav>
 
-				<div class="navbar-header">
+			<div class="nav-wrapper teal lighten-1">
+		
+				<a href="#!" class="brand-logo center">Open-dj</a>
 
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<!-- Navigation mobile-->
+				<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+				
+				<ul id="slide-out" class="side-nav">
+					<li><span class="playing-now-title marquee left-align blue-text text-darken-2 truncate" style="font-weight:bold">En attente d'une demande de lecture</span></li>
+					<li><a href="#!" class="waves-effect waves-teal center-align volume-up" href="#!"><i class="mdi-av-volume-up"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-teal center-align volume-down" href="#!"><i class="mdi-av-volume-down"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-teal center-align music-resume" href="#!"><i class="mdi-av-play-arrow"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-teal center-align music-pause" href="#!"><i class="mdi-av-pause"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-teal center-align music-download" href="#!"><i class="mdi-file-file-download"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-teal center-align ask-server" href="#!"><i class="mdi-action-bug-report"></i></a></li>
+		
+				</ul>
 
-						<span class="sr-only">Ouvrir le menu</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-
-					</button>
-
-					<a class="navbar-brand" href="#">Open-dj</a>
-
-				</div>
-
-				<div id="navbar" class="navbar-collapse collapse">
-
-					<ul class="nav navbar-nav">
-
-						<li>
-						
-							<a href="#">Playing now :
-						
-								<span id="playing-now-title"> En attente d'une demande de lecture</span>
-						
-							</a>
-
-						</li>
-
-					</ul>
-
-					<ul class="nav navbar-nav navbar-right">
-
-						<li><a id="volume-up" href="#"><span style="font-size:2em;" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></a></li>
-						<li><a id="volume-down" href="#"><span style="font-size:2em;" class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></a></li>
-						<li><a id="music-pause" href="#"><span style="font-size:2em;" class="glyphicon glyphicon-pause" aria-hidden="true"></span></a></li>
-						<li><a id="music-resume" href="#"><span style="font-size:2em;" class="glyphicon glyphicon-play" aria-hidden="true"></span></a></li>
-						<li><a id="music-download" href="#"><span style="font-size:2em;" class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
-						<li><a id="ask-server" href="#"><span style="font-size:2em;" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></li>
-
-					</ul>
-
-				</div>
-
+				<!-- Navigation desktop-->
+				<ul class="right hide-on-med-and-down">
+					
+					<li><a href="#!"><i class="mdi-av-hearing left"></i><span class="playing-now-title marquee">En attente d'une demande de lecture</span></a></li>
+					<li><a href="#!" class="waves-effect waves-light volume-up" href="#!"><i class="mdi-av-volume-up"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-light volume-down" href="#!"><i class="mdi-av-volume-down"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-light music-resume" href="#!"><i class="mdi-av-play-arrow"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-light music-pause" href="#!"><i class="mdi-av-pause"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-light music-download" href="#!"><i class="mdi-file-file-download"></i></a></li>
+					<li><a href="#!" class="waves-effect waves-light ask-server" href="#!"><i class="mdi-action-bug-report"></i></a></li>
+		
+				</ul>
+		
 			</div>
 
 		</nav>
 
 		<span style="display:none;visibility:hidden"><img src="images/squares.gif"/></span>
-
-		<div class="container" style="padding-top:10em">
-
-    		<div class="row">
         
-        		<div class="col-md-offset-5 col-md-2">
-        			
-        			<input id="yt-search" type="text" class="form-control" placeholder="Youtube"/><br/><br/>
+        <div class="container" style="margin-top:5em;">	
+
+			<div class="center-align">
+
+				<input id="yt-search" type="text" class="teal-text text-lighten-1"/><br/><br/>				
+
+			</div>
+
+			<div class="center-align" style="margin-bottom:5em;">
+				
+				<a id="launch-search" class="waves-effect waves-light btn"><i class="mdi-action-search left"></i>Rechercher</a>
+
+			</div>
+
+			<div class="center-align">
+				
+				<div id="search-yt-results"> 
+					<!--	Résultats de la recherche	 -->
+				</div>
+
+			</div>
+
+
+			<div class="center-align">
+				
+				<!-- Scroller de resultats -->
+				<ul id="yt-result-scroller" class="hidden pager">
+
+					<li id="page-prev" class="hidden waves-effect left"><a href="#!"><i class="large mdi-navigation-chevron-left"></i></a></li>
 					
-					<button class="btn btn-danger form-control" id="launch-search">Lancer une recherche</button>
+					<li id="page-next" class="hidden waves-effect right"><a href="#!"><i class="large mdi-navigation-chevron-right"></i></a></li>
+			
+				</ul>
 
-        		</div>
+			</div>
 
-    		</div>
-		
 		</div>
-
-		<div id="search-yt-results" style="text-align:center;margin-top:5em;margin-left:25%;width:50%;height:50%;border:2px,black,solid;border-radius:.2em;"> 
-			<!--	Résultats de la recherche	 -->
-		</div>
-
-		<!-- Scroller de resultats -->
-		<nav id="yt-result-scroller" class="hidden">
-			<ul class="pager">
-				<li class="hidden" id="page-prev"><a href="#">Précédent</a></li>
-				<li class="hidden" id="page-next"><a href="#">Suivant</a></li>
-			</ul>
-		</nav>
 		
-		<script src="/socket.io/socket.io.js"> </script>
-		<script src="js/jquery-2.0.1.min.js"> </script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/jquery-2.0.1.min.js"></script>
+		<script src="js/materialize.min.js"></script>
 		<script src="js/alertify.min.js"></script>
-		<script src="js/SocketsManager.js"> </script>
-		<script src="js/YoutubePlayer.js"> </script>
+		<script src="js/jquery.marquee.min.js"></script>
+		<script src="js/YoutubePlayer.js"></script>
+		<script src="js/SocketsManager.js"></script>
 
 	</body>
 

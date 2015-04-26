@@ -23,6 +23,9 @@
 
 		//Init
 		initialize : function(){
+
+			//Initialisation du menu mobile
+			$(".button-collapse").sideNav();
 			
 			//Mise en place du listener sur le bouton de recherche de vidéos
 			$('#launch-search').on('click', function(e){
@@ -54,7 +57,7 @@
 			});
 
 			//Listeners sur les boutons de reglage du volume
-			$('#volume-up').on('click', function(e){
+			$('.volume-up').on('click', function(e){
 				
 				//Stop event original
 				e.preventDefault();
@@ -63,7 +66,7 @@
 
 			});
 
-			$('#volume-down').on('click', function(e){
+			$('.volume-down').on('click', function(e){
 
 				//Stop event original
 				e.preventDefault();
@@ -73,7 +76,7 @@
 			});
 
 			//Commande de mise en pause de la musique
-			$('#music-pause').on('click', function(e){
+			$('.music-pause').on('click', function(e){
 				
 				//Stop event original
 				e.preventDefault();
@@ -83,7 +86,7 @@
 			});
 
 			//Commande de remise en lecture de la musique
-			$('#music-resume').on('click', function(e){
+			$('.music-resume').on('click', function(e){
 				
 				//Stop event original
 				e.preventDefault();
@@ -93,7 +96,7 @@
 			});
 
 			//Listener download-song qui permet de télècharger une musique en cours de lecture
-			$('#music-download').on('click',function(e){
+			$('.music-download').on('click',function(e){
 
 				//Stop event original
 				e.preventDefault();
@@ -103,7 +106,7 @@
 			});
 
 			//ask-server
-			$('#ask-server').on('click', function(e){
+			$('.ask-server').on('click', function(e){
 
 				//Stop event original
 				e.preventDefault();
@@ -119,7 +122,6 @@
 			$('#page-next').on('click', function(){
 				self.getPage('+');
 			});
-
 
 		},
 
@@ -309,7 +311,7 @@
 				self.toggleOverlay();
 			}
 
-			$('#playing-now-title').text('    '+title);
+			$('.playing-now-title').text('    '+title);
 		},
 
 		/**
