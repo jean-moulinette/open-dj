@@ -192,7 +192,9 @@
 	var self = SocketManager;
 
 	//Init immédiat du manager de socket
-	SocketManager.initialize();
+	$(document).ready(function(){
+		SocketManager.initialize();
+	});
 
 	window.SocketManager = SocketManager;
 
