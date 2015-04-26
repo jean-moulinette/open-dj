@@ -101,7 +101,9 @@
 				//Stop event original
 				e.preventDefault();
 
-				SocketManager.conn.emit('music-download');
+				//Lancement de la fonction de téléchargement
+				SocketManager.downloadMusic();
+				
 
 			});
 
@@ -377,7 +379,10 @@
 				self.currentPage--;
 			}
 
+			window.scrollTo(0,0);
+
 			SocketManager.pageSwitch(self.currentPage);
+
 		}
 	
 	};

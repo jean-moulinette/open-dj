@@ -58,8 +58,7 @@ var express = require('express'),
 	logger = require('express-logger'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
-	audioTools = require('./lib/audioTools'),
-	clients =  {};
+	audioTools = require('./lib/audioTools');
 
 app.set('port', process.env.TEST_PORT || 1337);
 
@@ -73,6 +72,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Routes
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/public/index.html');
+});
+
+//Route de telechargement d'une musique
+app.get('/download', function(req, res){
+
+	//Envoi du fichier au client
+	res.download('downloaded/' + playingStatus.songId, playingStatus.musicTitle, function(err){
+
+		//Log des erreurs
+		if(err){
+			console.log(err);
+			res.status(err.status).end();
+		}else{
+			//Log de succés avec nom du fichier
+			console.log('Un client vient de télécharger le fichier :'+playingStatus.songId);
+		}
+
+	});
+
 });
 
 /**
@@ -280,8 +298,10 @@ io.sockets.on('connection', function(socket){
 			return;
 
 		}else{
-			//Placer ici une fonction d'envoi du fichier au socket lolz
-			//audioTools.downloadCurrentSong();
+
+			//On renvoi au SocketManager chez le client, la route serveur et l'id du fichier à télécharger
+			socket.emit('song-download-accepted');
+
 		}
 
 	
@@ -304,6 +324,6 @@ io.sockets.on('connection', function(socket){
 //Ouverture des vannes TCP !
 server.listen(app.get('port'), function(){
 
-  console.log('Open-dj is running on port ' + app.get('port'));
+  console.log('\nOpen-dj is running on port ' + app.get('port'));
 
 });

@@ -13,10 +13,12 @@
 		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
 		musicToForce : null,
 
+		serverAdress : '192.168.1.86:1337',
+
 		initialize : function(){
 
 			//Etablissement de la connection bidrectionelle entre le serveur et le clients présent
-			self.conn = io.connect('192.168.1.86:1337');
+			self.conn = io.connect(self.serverAdress);
 
 			//Listener de connection établie
 			self.conn.on('connect', function(data){
@@ -131,6 +133,14 @@
 
 			});
 
+			//Listener dee reception de l'url de téléchargement de la musique
+			self.conn.on('song-download-accepted', function(){
+
+				//Reception dynamique du fichier à télécharger (ouvre un prompt de DL)
+				window.location.assign('http://'+SocketManager.serverAdress+'/download');
+
+			});
+
 		},
 
 		/**
@@ -164,8 +174,18 @@
 
 			self.conn.emit('result-page-change', index);
 
-		}
+		},
 
+		/**
+		 * [downloadMusic Demande l'autorisation au serveur pour télécharger une musique]
+		 * 
+		 * @return {[void]}
+		 */
+		downloadMusic : function(){
+
+			self.conn.emit('music-download');
+
+		}
 
 	};
 
