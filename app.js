@@ -242,19 +242,17 @@ io.sockets.on('connection', function(socket){
 			return;
 		}
 
-		//Si le lecteur du serveur n'est pas deja en pause, on peut continuer
-		if(!playingStatus.paused){
 
-			var messageObject = {
-				command:'pause'
-			};
+		var messageObject = {
+			command:'pause'
+		};
 
-			//Envoi de la commande de pause au child process
-			playingStatus.process.send(messageObject);
+		//Envoi de la commande de pause au child process
+		playingStatus.process.send(messageObject);
 
-			//Mise à jour de l'objet représentant la lecture de la musique sur le serveur
-			playingStatus.paused = true;			
-		}
+		//Mise à jour de l'objet représentant la lecture de la musique sur le serveur
+		playingStatus.paused = true;			
+
 
 	});
 
@@ -268,20 +266,15 @@ io.sockets.on('connection', function(socket){
 			return;
 		}
 
-		//Si le lecteur du serveur est en pause
-		if(playingStatus.paused){
+		var messageObject = {
+			command:'resume'
+		};
 
-			var messageObject = {
-				command:'resume'
-			};
+		//Envoi de la commande de remise en marche du lecteur serveur
+		playingStatus.process.send(messageObject);
 
-			//Envoi de la commande de remise en marche du lecteur serveur
-			playingStatus.process.send(messageObject);
-
-			//Mise à jour de l'objet représentant la lecture de la musique sur le serveur
-			playingStatus.paused = false;
-
-		}
+		//Mise à jour de l'objet représentant la lecture de la musique sur le serveur
+		playingStatus.paused = false;
 
 	});
 
