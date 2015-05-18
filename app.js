@@ -77,8 +77,8 @@ app.get('/', function (req, res) {
 //Route de telechargement d'une musique
 app.get('/download', function(req, res){
 
-	//Envoi du fichier au client
-	res.download('downloaded/' + playingStatus.songId, playingStatus.musicTitle, function(err){
+	//Envoi du fichier au client (path + fileName)
+	res.download('downloaded/' + playingStatus.songId, playingStatus.musicTitle+'.mp3', function(err){
 
 		//Log des erreurs
 		if(err){
@@ -86,7 +86,7 @@ app.get('/download', function(req, res){
 			res.status(err.status).end();
 		}else{
 			//Log de succés avec nom du fichier
-			console.log('Un client vient de télécharger le fichier :'+playingStatus.songId);
+			console.log('Un client vient de télécharger le fichier ' + playingStatus.songId + ' :' + playingStatus.musicTitle);
 		}
 
 	});
