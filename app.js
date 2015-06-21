@@ -58,8 +58,8 @@ var express = require('express'),
 	logger = require('express-logger'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
-	audioTools = require('./lib/audioTools'),
-	socketsRoutes = require('./lib/socketsRoutes');
+	audioTools = require('./lib/audioTools'),	//audioTools lib permettant les interractions musicales sur la machine
+	socketsRoutes = require('./lib/socketsRoutes');	//socketsRoutes les routes socket io
 
 app.set('port', process.env.TEST_PORT || 1337);
 
@@ -102,7 +102,9 @@ playingStatus = {
 
 	paused:false,
 
-	process:null
+	process:null,
+
+	playlist:{}	//playlist, objet contenant les videos en fil d'attente de lecture
 
 };
 
