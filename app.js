@@ -70,14 +70,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+	res.sendfile(__dirname + '/public/index.html');
 });
 
 //Route de telechargement d'une musique
 app.get('/download', function(req, res){
-
 	audioTools.resolveDownload(req, res);
-
 });
 
 /**
@@ -88,6 +86,7 @@ app.get('/download', function(req, res){
  *	musicTitle - { string } - Titre de la musique en cours
  *	paused - { boolean } - true si la musique est en pause
  *	process - { Child Process } - Le child process de lecture de la musique
+ *	playlist - { object } - Objet contenant les videos en fil d'attente de lecture
  */
 playingStatus = {
 
@@ -103,7 +102,7 @@ playingStatus = {
 
 	process:null,
 
-	playlist:{}	//playlist, objet contenant les videos en fil d'attente de lecture
+	playlist:{}
 
 };
 
