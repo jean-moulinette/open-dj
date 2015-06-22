@@ -55,15 +55,14 @@ var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
 	path = require('path'),
-	logger = require('express-logger'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
 	audioTools = require('./lib/audioTools'),	//audioTools lib permettant les interractions musicales sur la machine
 	socketsRoutes = require('./lib/socketsRoutes');	//socketsRoutes les routes socket io
 
-app.set('port', process.env.TEST_PORT || 1337);
+process.title = 'open-dj';
 
-app.use(logger({path:'dev'}));
+app.set('port', process.env.TEST_PORT || 1337);
 
 app.use(methodOverride());
 
