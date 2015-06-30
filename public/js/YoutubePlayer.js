@@ -179,26 +179,7 @@
 				//Stop event original
 				event.preventDefault();
 
-				if(typeof this.href.split('v=')[1] == 'undefined'){
-					alertify.error('On dirais que t\'as choisis autre chose qu\'une video(chaine youtube ou autre), ça va pas marcher :(<br/>Essayes encore =D');
-					
-					return;
-				}
-
-				var musicTitle = $(this).parent().find('.video-title').text();
-
-				var sendRequestToRpi = {
-					action: 'play',
-					id: this.href.split('v=')[1],
-					title: musicTitle
-				};
-
-				//On communique au serveur la vidéo à télécharger et lire sur les hauts parleurs, il fera le café tout seul
-				if(sendRequestToRpi !== ''){
-
-					SocketManager.conn.emit('video', sendRequestToRpi);
-
-				}
+				self.manageClickVideo(this);
 
 			});
 
@@ -208,6 +189,35 @@
 			//Je botte le cul de l'overlay de patience
 			self.toggleOverlay();
 		},
+
+		/**
+		 *	manageClickVideo	La gestion du click sur une video recherchée
+		 *
+		 *	@param: { object } - video - L'élément DOM de la video cliquée
+		 *
+		 *	@return: { void } - Lance des événements sockets
+		 */
+		manageClickVideo : function(video){
+
+			if(typeof video.href.split('v=')[1] == 'undefined'){
+				alertify.error('On dirais que t\'as choisis autre chose qu\'une video(chaine youtube ou autre), ça va pas marcher :(<br/>Essayes encore =D');
+				
+				return;
+			}
+
+			var musicTitle = $(video).parent().find('.video-title').text();
+
+			var sendRequestToRpi = {
+				action: 'play',
+				id: video.href.split('v=')[1],
+				title: musicTitle
+			};
+
+			//On communique au serveur la vidéo à télécharger et lire sur les hauts parleurs, il fera le café tout seul
+			SocketManager.conn.emit('video', sendRequestToRpi);
+
+		},
+
 
 		/**
 		 *	getHtmlResult
