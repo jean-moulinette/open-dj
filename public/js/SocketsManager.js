@@ -11,9 +11,9 @@
 		youtubePlayerInitialized : false,
 
 		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
-		musicToForce : null,
+		musicSelected : null,
 
-		serverAdress : '192.168.1.86:1337',
+		serverAdress : '192.168.1.73:1337',
 
 		initialize : function(){
 
@@ -111,25 +111,9 @@
 			//Listener de demande de confirmation pour forcer le changement de la musique en cours
 			self.conn.on('ask-force', function(music){
 
-				self.musicToForce = music;
+				self.musicSelected = music;
 
-				var confirmMessage = 'Une musique est déjà en cours de lecture !<br/>Tu veux forcer le changement ..?';
-
-				//On fait apparaitre l'alerte
-				alertify.confirm().set({
-
-					message:confirmMessage,
-
-					onok:self.askForceOnOk,
-
-					labels:{
-						ok:'Fait péter le son !',
-						cancel:'Non merci'
-					},
-
-					title:'Woops !'
-
-				}).show(); 
+				YoutubePlayer.initAlertChoice();
 
 			});
 
@@ -141,10 +125,24 @@
 
 			});
 
+			//Listener des echanges IO concernant la playlist
+			self.conn.on('playlist', function(data){
+
+				//GERRER LES ACTION 
+				//UPDATE-PLAYLIST quand un autre client à rajouté/supprimé un elem
+				var action = data.action;
+
+				if(action === 'update-playlist'){
+					YoutubePlayer.addItemPlaylist(data);
+				}
+
+
+			});
+
 		},
 
 		/**
-		 *	askForceOnOk
+		 *	forceMusic
 		 *
 		 *	Fonction déclenchée lorsque l'utilisateur confirme le changement d'une musique par une autre 
 		 *	Voir commande io ask-force
@@ -152,13 +150,32 @@
 		 *	@param: void
 		 *	@return: void
 		 */
-		askForceOnOk : function(){
+		forceMusic : function(){
 
-			self.conn.emit('forceChange', self.musicToForce);
+			self.conn.emit('forceChange', self.musicSelected);
 
-			self.musicToForce = null;
+			self.musicSelected = null;
 
 			alertify.warning('Demande envoyée !');
+		},
+
+		/**
+		 *	addPlaylist
+		 *
+		 *	Fonction déclenchée lorsque l'utilisateur confirme l'ajout d'un titre à la playlist du serveur 
+		 *	Voir commande io playlist
+		 *
+		 *	@param: void
+		 *	@return: void
+		 */
+		addPlaylist : function(){
+
+			//Indique l'action d'ajout sur la liste de lecture du serveur
+			self.musicSelected.action = 'add';
+
+			//Lance la requete d'ajout vers le serveur IO
+			self.conn.emit('playlist', self.musicSelected);
+
 		},
 
 		/**

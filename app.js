@@ -15,20 +15,20 @@
  */
 
 /*
-	░░░░░░░░░░░░░ ▲ ░░░░░░░░░░░░░░░░░░░
-	░░░░░░░░░░░░ ▲ ▲ ░░░░░░░░░░░░░░░░░
-	░░░░░░░░░░░ ▲ ▲ ▲ ░░░░░░░░░░░░░░░
-	░░░░░░░░░░ ▲ ▲ ▲ ▲ ░░░░░░░░░░░░░░
-	░░░░░░░░░ ▲ ▲ ▲ ▲ ▲ ░░░░░░░░░░░░
-	░░░░░░░░ ▲ ▲ ▲ ▲ ▲ ▲ ░░░░░░░░░░
-	░░░░░░░ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ░░░░░░░░
-	░░░░░░ ▲░░░░░░░░░░░░▲ ░░░░░░░░
-	░░░░░ ▲ ▲░░░░░░░░░░▲ ▲ ░░░░░░░
-	░░░░ ▲ ▲ ▲░░░░░░░░▲ ▲ ▲ ░░░░░
-	░░░ ▲ ▲ ▲ ▲░░░░░░▲ ▲ ▲ ▲ ░░░░
-	░░ ▲ ▲ ▲ ▲ ▲░░░░▲ ▲ ▲ ▲ ▲ ░░
-	░ ▲ ▲ ▲ ▲ ▲ ▲░░▲ ▲ ▲ ▲ ▲ ▲ ░
-	 ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲
+		░░░░░░░░░░░░░ ▲ ░░░░░░░░░░░░░░░░░░░
+		░░░░░░░░░░░░ ▲ ▲ ░░░░░░░░░░░░░░░░░
+		░░░░░░░░░░░ ▲ ▲ ▲ ░░░░░░░░░░░░░░░
+		░░░░░░░░░░ ▲ ▲ ▲ ▲ ░░░░░░░░░░░░░░
+		░░░░░░░░░ ▲ ▲ ▲ ▲ ▲ ░░░░░░░░░░░░
+		░░░░░░░░ ▲ ▲ ▲ ▲ ▲ ▲ ░░░░░░░░░░
+		░░░░░░░ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ░░░░░░░░
+		░░░░░░ ▲░░░░░░░░░░░░▲ ░░░░░░░░
+		░░░░░ ▲ ▲░░░░░░░░░░▲ ▲ ░░░░░░░
+		░░░░ ▲ ▲ ▲░░░░░░░░▲ ▲ ▲ ░░░░░
+		░░░ ▲ ▲ ▲ ▲░░░░░░▲ ▲ ▲ ▲ ░░░░
+		░░ ▲ ▲ ▲ ▲ ▲░░░░▲ ▲ ▲ ▲ ▲ ░░
+		░ ▲ ▲ ▲ ▲ ▲ ▲░░▲ ▲ ▲ ▲ ▲ ▲ ░
+		 ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲
 		░░░░░▓▓░░░░░░░░░░░░▓▓░░░░░░░
 		░░░░░▓▓▓░████████░▓▓▓░░░░░░░
 		░░░░░▓▓░█▓▓▓▓▓▓▓▓█░▓▓░░░░░░░
@@ -84,6 +84,7 @@ app.get('/download', function(req, res){
  *	on - { boolean } - true si une lecture est en cours
  *	managing - { boolean } - true si le serveur est en train de traiter une demande
  *	musicTitle - { string } - Titre de la musique en cours
+ *	image - { string } - URL de l'image representant la musique
  *	paused - { boolean } - true si la musique est en pause
  *	process - { Child Process } - Le child process de lecture de la musique
  *	playlist - { object } - Objet contenant les videos en fil d'attente de lecture
@@ -97,6 +98,8 @@ playingStatus = {
 	songId:null,
 
 	musicTitle:'',
+
+	image:'',
 
 	paused:false,
 

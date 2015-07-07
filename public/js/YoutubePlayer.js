@@ -21,6 +21,9 @@
 		//Garde en mémoire la page de résultats en cours de visualisation
 		currentPage : 1,
 
+		//Initialisation du tab playlist à vide
+		playlist : [],
+
 		//Init
 		initialize : function(){
 
@@ -42,16 +45,17 @@
 
 				//Si l'utilisateur est en focus sur l'input texte
 				if($('#yt-search').is(':focus')){
-
+	
 					var code = e.keyCode || e.which;
 
 					if(code == 13){
+
+
 						e.preventDefault();
 
 						//Lancement de la fonction de recherche de vidéos de la classe 
 						self.launchYtSearch();
 					}
-
 				}
 
 			});
@@ -107,7 +111,7 @@
 
 			});
 
-			//ask-server
+			//log
 			$('.ask-server').on('click', function(e){
 
 				//Stop event original
@@ -200,6 +204,7 @@
 		manageClickVideo : function(video){
 
 			if(typeof video.href.split('v=')[1] == 'undefined'){
+				
 				alertify.error('On dirais que t\'as choisis autre chose qu\'une video(chaine youtube ou autre), ça va pas marcher :(<br/>Essayes encore =D');
 				
 				return;
@@ -207,14 +212,18 @@
 
 			var musicTitle = $(video).parent().find('.video-title').text();
 
-			var sendRequestToRpi = {
+			//Faire le process de capture d'image
+			var image = '';
+
+			var music = {
 				action: 'play',
 				id: video.href.split('v=')[1],
-				title: musicTitle
+				title: musicTitle,
+				image: image,
 			};
 
 			//On communique au serveur la vidéo à télécharger et lire sur les hauts parleurs, il fera le café tout seul
-			SocketManager.conn.emit('video', sendRequestToRpi);
+			SocketManager.conn.emit('video', music);
 
 		},
 
@@ -327,6 +336,51 @@
 		},
 
 		/**
+		 *	updatePlaylist
+		 *
+		 *	Actualise la playlist chez le client 	
+		 *
+		 *	@param: {playlist} - playlistObject - L'objet contenant les vidéos
+		 *
+		 *	@return: {void}
+		 */		
+		updatePlaylist : function(playlist){
+
+		},
+
+		/**
+		 *	initAlertChoice
+		 *
+		 *	Ouvre la modal de proposition d'action au niveau du lecteur de musique
+		 *	Permet de forcer/ajouter des musiques a la playlist partagée
+		 *
+		 *	@param: {string} - choice - up/down 
+		 *
+		 *	@return: {void}
+		 */
+		initAlertChoice : function(){
+
+			//On fait apparaitre l'alerte
+			alertify.confirm().set({
+
+				message:'Une musique est déjà en cours de lecture...',
+
+				onok:SocketManager.forceMusic,
+
+				onCancel:SocketManager.addPlaylist,
+
+				labels:{
+					ok:'Fait péter le son !',
+					cancel:'Ajouter à la playlist'
+				},
+
+				title:'C\'est embarassant...'
+
+			}).show(); 
+
+		},
+
+		/**
 		 *	modifyVolume
 		 *
 		 *	Permet de diminuer/augmenter le volume de la musique diffusée 	
@@ -392,6 +446,19 @@
 			window.scrollTo(0,0);
 
 			SocketManager.pageSwitch(self.currentPage);
+
+		},
+
+		/**
+		 *	addItemPlaylist
+		 *
+		 *	Ajout d'une musique dans la playlist 
+		 *
+		 *	@param: music - {object} - l'objet musique informations de la musique
+		 *
+		 *	@return: {void}
+		 */
+		addItemPlaylist : function(music){
 
 		}
 	
