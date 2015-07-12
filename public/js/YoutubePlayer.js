@@ -270,7 +270,7 @@
 				var title = $(this).find('.yt-lockup-content').find('a').html();
 
 				//Création du div corréspondant à un block de resultat youtube
-				var singleResult = '<div class="result-block">'+linkImage+'<span class="video-title">'+title+'</span>'+'</div><br/><br/><br/>';
+				var singleResult = '<div class="result-block col s4">'+linkImage+'<span class="video-title">'+title+'</span>'+'</div>';
 
 				//Increment du compteur de resultats de la classe
 				self.resultsCount++;
@@ -416,7 +416,8 @@
 
 			// add the overlay with loading image to the page
 			var over = '<div id="overlay">' +
-			'<img id="loading" src="images/squares.gif">' +
+			'<div class="progress">' +
+			'<div class="indeterminate"></div>'+
 			'</div>';
 			
 			$(over).appendTo('body');

@@ -40,8 +40,9 @@ background-color:#F6F4F1;
  *	
  *	Pour faire en sorte qu'il se trouve au dessus du menu site
  */
-.ajs-modal{
-	z-index:2000 !important;
+.progress{
+    height:1.5%;
+    margin-top:0%;
 }
 
 .hidden{

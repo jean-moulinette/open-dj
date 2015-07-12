@@ -58,10 +58,7 @@
 
 		</div>
 
-		<span style="display:none;visibility:hidden"><img src="images/squares.gif"/></span>
-        
-        <div class="container" style="margin-top:5em;">	
-
+		<div class="container" style="margin-top:3em;">
 
 			<div class="center-align">
 
@@ -87,12 +84,18 @@
 			
 			</div>			
 
-			<div class="center-align" style="margin-top:5em;">
+<!-- 			<div class="center-align" style="margin-top:5em;">
 				
 				<div id="search-yt-results"> 
-					<!--	Résultats de la recherche	 -->
+						Résultats de la recherche	 
 				</div>
 
+			</div>
+ -->
+			<div class="row" style="margin-top:5em;">
+				<div id="search-yt-results">
+
+				</div>
 			</div>
 
 
@@ -101,9 +104,9 @@
 				<!-- Scroller de resultats -->
 				<ul id="yt-result-scroller" class="hidden pager">
 
-					<li id="page-prev" class="hidden waves-effect left"><a href="#!"><i class="large mdi-navigation-chevron-left"></i></a></li>
+					<li id="page-prev" class="hidden waves-effect left"><a href="#!" onclick="event.preventDefault();"><i class="large mdi-navigation-chevron-left"></i></a></li>
 					
-					<li id="page-next" class="hidden waves-effect right"><a href="#!"><i class="large mdi-navigation-chevron-right"></i></a></li>
+					<li id="page-next" class="hidden waves-effect right"><a href="#!" onclick="event.preventDefault();"><i class="large mdi-navigation-chevron-right"></i></a></li>
 			
 				</ul>
 
