@@ -36,7 +36,7 @@ see https://github.com/rg3/youtube-dl/ for more infos
 Python version 2.6, 2.7, or 3.2
   
   
-nodejs V0.11+ & npm (node package manager) 
+nodejs V0.7+ & npm (node package manager) 
 visit https://github.com/joyent/node for more infos & guides
 
 
