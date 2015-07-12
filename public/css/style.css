@@ -49,3 +49,20 @@ background-color:#F6F4F1;
 	display:none;
 	visibiliy:hidden;
 }
+
+.result-block{
+    text-align:center;
+    margin-bottom:3em;
+    overflow:hidden;
+}
+
+.result-block-img{
+    width:15em;
+}
+
+.result-block-title{
+    width:15em;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}

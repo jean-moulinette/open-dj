@@ -210,7 +210,7 @@
 				return;
 			}
 
-			var musicTitle = $(video).parent().find('.video-title').text();
+			var musicTitle = $(video).parent().find('.result-block-title').text();
 
 			//Faire le process de capture d'image
 			var image = '';
@@ -244,41 +244,59 @@
 
 			var garbageDom = $.parseHTML(data);
 
+			//Increment du compteur de resultats de la classe
+			self.resultsCount = $(garbageDom).find('.yt-lockup').size();			
+			
 			$(garbageDom).find('.yt-lockup').each(function(index){
+
+				var linkImage;
+				var imgSrc;
+				var videoHref;
+				var title;
 
 				$(this).find('button').each(function(){
 					$(this).remove();
 				});
 
-				var linkImage = $(this).find('.yt-lockup-thumbnail');
+				//Recuperation du tag <a> et ses fils qui contient le href video + src de l'image
+				linkImage = $(this).find('.yt-lockup-thumbnail');
 
+				//Recuperation du href de la video
+				videoHref = $(linkImage).find('a').prop('href');
+
+				//Recuperation du titre
+				title = $(this).find('.yt-lockup-content').find('a').html();
+				
 				//Forcer le chargement de l'image pour le client
 				if(index > 5){
 
 					var imgForcedSrc = self.forceImageDisplay(linkImage);
 
+					//Si on a réussi à forcer l'image
 					if(imgForcedSrc !== false){
+						
 						//Remplacement de l'image caché par l'image forcée
-						$(linkImage).find('img').attr('src', imgForcedSrc);
+						$(linkImage).find('img').prop('src', imgForcedSrc);
 
 					}
 				}
 
-				//On reparse l'objet jquery en html après le traitement de l'image
-				linkImage = $(linkImage).html();
-
-				var title = $(this).find('.yt-lockup-content').find('a').html();
-
+				//Recuperation de la source de l'image après traitement
+				imgSrc = $(linkImage).find('img').prop('src');
+				
 				//Création du div corréspondant à un block de resultat youtube
-				var singleResult = '<div class="result-block col s4">'+linkImage+'<span class="video-title">'+title+'</span>'+'</div>';
-
-				//Increment du compteur de resultats de la classe
-				self.resultsCount++;
+				var singleResult = '<div class="result-block col s12 m12 l4">';
+				singleResult += '<a href="'+videoHref+'">';
+				singleResult += '<img class="result-block-img" src="'+imgSrc+'"/>';
+				singleResult += '</a><span class="result-block-title">'+title+'</span>';
+				singleResult += '</div>';
 
 				htmlNinja += singleResult;
+
 			});
 
 			return htmlNinja;
+
 		},
 
 		/**
