@@ -288,7 +288,7 @@
 				var singleResult = '<div class="result-block col s12 m12 l4">';
 				singleResult += '<a href="'+videoHref+'">';
 				singleResult += '<img class="result-block-img" src="'+imgSrc+'"/>';
-				singleResult += '</a><span class="result-block-title">'+title+'</span>';
+				singleResult += '</a><br/><span class="result-block-title">'+title+'</span>';
 				singleResult += '</div>';
 
 				htmlNinja += singleResult;
