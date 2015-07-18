@@ -385,7 +385,7 @@
 
 				onok:SocketManager.forceMusic,
 
-				onCancel:SocketManager.addPlaylist,
+				oncancel:SocketManager.addPlaylist,
 
 				labels:{
 					ok:'Fait péter le son !',
@@ -469,17 +469,22 @@
 		},
 
 		/**
-		 *	addItemPlaylist
+		 *	refreshPlaylist
 		 *
-		 *	Ajout d'une musique dans la playlist 
+		 *	Cette function sera appellée dés que l'objet playlist du serveur recevra un changement d'état (add/delete d'une musique dedans)
+		 *	Elle va s'occuper soit de creer l'affichage de la playlist chez le client si c'est la premiere fois qu'une musique est ajoutée dedans
+		 *	soit de mettre à jour cet affichage tout simplement.
 		 *
-		 *	@param: music - {object} - l'objet musique informations de la musique
+		 *	@param: { array } - serverPlaylist - Le tableau playlist du serveur
 		 *
-		 *	@return: {void}
+		 *	@return: { void } 
 		 */
-		addItemPlaylist : function(music){
+		refreshPlaylist : function(serverPlaylist){
 
-		}
+			//Reception de l'objet playlist du serveur
+			console.log(serverPlaylist);
+
+		},
 	
 	};
 

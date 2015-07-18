@@ -13,7 +13,7 @@
 		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
 		musicSelected : null,
 
-		serverAdress : '192.168.1.86:1337',
+		serverAdress : '192.168.1.36:1337',
 
 		initialize : function(){
 
@@ -126,16 +126,9 @@
 			});
 
 			//Listener des echanges IO concernant la playlist
-			self.conn.on('playlist', function(data){
+			self.conn.on('playlist', function(serverPlaylist){
 
-				//GERRER LES ACTION 
-				//UPDATE-PLAYLIST quand un autre client à rajouté/supprimé un elem
-				var action = data.action;
-
-				if(action === 'update-playlist'){
-					YoutubePlayer.addItemPlaylist(data);
-				}
-
+				YoutubePlayer.refreshPlaylist(serverPlaylist);
 
 			});
 
@@ -179,7 +172,7 @@
 		},
 
 		/**
-		 *	pageSwtich
+		 *	pageSwitch
 		 *
 		 *	Fonction permettant de ramener de nouvelles pages d'une même recherche
 		 *
