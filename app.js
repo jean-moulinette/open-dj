@@ -105,7 +105,7 @@ playingStatus = {
 
 	process:null,
 
-	playlist:{}
+	playlist:[]
 
 };
 
