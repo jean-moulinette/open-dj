@@ -13,7 +13,7 @@
 		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
 		musicSelected : null,
 
-		serverAdress : '192.168.1.36:1337',
+		serverAdress : '192.168.1.32:1337',
 
 		initialize : function(){
 
