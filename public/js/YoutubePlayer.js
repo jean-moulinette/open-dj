@@ -22,7 +22,7 @@
 		currentPage : 1,
 
 		//Initialisation du tab playlist à vide
-		playlist : [],
+		playlist : {},
 
 		//Init
 		initialize : function(){
@@ -395,6 +395,37 @@
 				title:'C\'est embarassant...'
 
 			}).show(); 
+
+		},
+
+		/**
+		 *	addItemToServerPlaylist
+		 *
+		 *	Cette fonction a pour but d'effectuer quelques vérifications
+		 *	avant de commander un ajout de musique dans la playlist du serveur
+		 *
+		 *	@param: {void} 
+		 *
+		 *	@return: {undefined} - Peut lancer un event à socketIO
+		 */
+		addItemToServerPlaylist : function(){
+
+			music = SocketManager.musicSelected;
+
+			for(var item in self.playlist){
+
+				if(item === SocketManager.musicSelected){
+
+					alertify.warning('Cette musique est déjà dans la playlist.');
+
+					return;
+
+				}
+
+			}
+
+			//Envoi de la commande IO pour que le serveur ajoute cette musique à sa playlist
+			SocketManager.addPlaylist();
 
 		},
 

@@ -105,9 +105,12 @@ playingStatus = {
 
 	process:null,
 
-	playlist:[]
+	playlist:{}
 
 };
+
+//Alias pour la playlist
+serverPlaylist = playingStatus.playlist;
 
 //Ouverture des vannes TCP !
 server.listen(app.get('port'), function(){
