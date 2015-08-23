@@ -12,6 +12,9 @@
 		//Dispositif anti troll-spammeur. Bloquera les recherches pendant le traitement du serveur d'une recherche
 		searching : false,
 
+		//Permet de garder en mémoire le pattern de synchronisation
+		lastSearchedPattern : null,
+
 		//Detecteur de musique en cours de lecutre
 		playing :  false,
 
@@ -153,9 +156,12 @@
 				//Activation du dispositif anti spameur de recherches
 				self.searching = true;
 
+				//On remplace les espace par des '+' pour que ça fasse une requete GET potable par la suite
+				inputVal = inputVal.replace(/ /g, '+');
+
 				//Mise en mémoire de la recherche dans la classe YoutubePlayer
-				self.lastSearchedPattern = inputVal;
-	
+				self.lastSearchedPattern = inputVal.toLowerCase();
+
 				SocketManager.conn.emit('yt-search', inputVal);
 
 				//Mise en place de l'overlay de patience
@@ -500,6 +506,22 @@
 		},
 
 		/**
+		 *	getSongFile
+		 *
+		 *	Cette function à pour but d'ouvrir le pop up de téléchargement de la chanson en cours de lecture
+		 *
+		 *	@param: { array } - serverPlaylist - Le tableau playlist du serveur
+		 *
+		 *	@return: { void } 
+		 */
+		getSongFile : function(serverPlaylist){
+
+			//Reception dynamique du fichier à télécharger (ouvre un prompt de DL)
+			window.location.assign('http://'+SocketManager.serverAdress+'/download');
+
+		},
+
+		/**
 		 *	refreshPlaylist
 		 *
 		 *	Cette function sera appellée dés que l'objet playlist du serveur recevra un changement d'état (add/delete d'une musique dedans)
@@ -515,7 +537,7 @@
 			//Reception de l'objet playlist du serveur
 			console.log(serverPlaylist);
 
-		},
+		}
 	
 	};
 

@@ -13,7 +13,7 @@
 		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
 		musicSelected : null,
 
-		serverAdress : '192.168.1.61:1337',
+		serverAdress : '192.168.1.32:1337',
 
 		initialize : function(){
 
@@ -23,15 +23,24 @@
 			//Listener de connection établie
 			self.conn.on('connect', function(data){
 
-				self.conn.emit('new_user');
-
 				//Permet de ne pas init deux fois sur le même client (voir definitition de l'attribut)
 				if(!self.youtubePlayerInitialized){
+					
+					//Initialisation de la connection IO coté server
+					self.conn.emit('new_user');
+					
 					//Init de la classe YoutubePlayer
 					YoutubePlayer.initialize();					
+
+					self.youtubePlayerInitialized = true;
+				
+				}else{
+
+					//Si on avait juste perdu la liaison IO, on va juste relancer une synchronisation pour récuperer l'historique du client
+					self.reSyncWithServer();
+
 				}
 
-				self.youtubePlayerInitialized = true;
 			});
 
 			//Listener de récupération de resultat de recherche
@@ -120,8 +129,7 @@
 			//Listener dee reception de l'url de téléchargement de la musique
 			self.conn.on('song-download-accepted', function(){
 
-				//Reception dynamique du fichier à télécharger (ouvre un prompt de DL)
-				window.location.assign('http://'+SocketManager.serverAdress+'/download');
+				YoutubePlayer.getSongFile();
 
 			});
 
@@ -131,6 +139,26 @@
 				YoutubePlayer.refreshPlaylist(serverPlaylist);
 
 			});
+
+		},
+
+		/**
+		 *	reSyncWithServer
+		 *
+		 *	Fonction déclenchée lorsque une resynchronisation au serveur est necessaire (connection IO broken)
+		 *
+		 *	@param: void
+		 *
+		 *	@return: void
+		 */
+		reSyncWithServer : function(){
+
+			//On va envoyer un objet qui permettra au server de resynchroniser le socket avec son activité passé
+			var reSyncObject = {
+				searchingPattern : YoutubePlayer.lastSearchedPattern
+			}
+
+			self.conn.emit('reSyncUser', reSyncObject);
 
 		},
 
