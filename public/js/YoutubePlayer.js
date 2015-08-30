@@ -27,6 +27,12 @@
 		//Initialisation du tab playlist à vide
 		playlist : {},
 
+		//Stockera l'id du timeout du popup open en place, en cas de deconnection
+		pingTimeOutPopup : undefined,
+
+		//Stockera l'id du timeout du popup open en place, en cas de reconnection
+		reSyncPopup : undefined,
+
 		//Init
 		initialize : function(){
 
@@ -518,6 +524,90 @@
 
 			//Reception dynamique du fichier à télécharger (ouvre un prompt de DL)
 			window.location.assign('http://'+SocketManager.serverAdress+'/download');
+
+		},
+
+		/**
+		 *	resynced, 
+		 *
+		 *	préviens l'utilisateur qu'il viens de se resynchroniser avec le serveur IO 
+		 *
+		 *	@param: { void } 
+		 *
+		 *	@return: { void }	
+		 */
+		reSynced : function(){
+
+			//Si on avait déjà un timeOut en attente d"execution pour le popup, on le coupe et reprend depuis le début
+			if( typeof self.reSyncPopup !== undefined ){
+				clearTimeout(self.reSyncPopup);
+			}
+
+			self.reSyncPopup = setTimeout(function(){
+
+				//On va fermer toutes les alerter ou notices alertify sur l'ecran du user
+				alertify.closeAll()
+				alertify.dismissAll();
+				$('#overlay-transparent-loader').addClass('hidden')
+
+				var canDismiss = false;
+				var notification = alertify.success('Connexion rétablie !<br/>Bonne écoute sur Open-Dj');
+
+				notification.ondismiss = function(){ return canDismiss; };
+				setTimeout(function(){ canDismiss = true;}, 5000);
+
+				self.reSyncPopup = undefined;
+
+			}, 3000);
+
+		},
+
+		/**
+		 *	pingtimeout
+		 *
+		 *	Fonction lancée lorsque la connexion avec le serveur IO est perdue 
+		 *
+		 *	MHHHHHHHHHHHHHHHHHH... C'est embarassant :( 
+		 *
+		 *	@param: { void } 
+		 *
+		 *	@return: { void }	
+		 */
+		pingTimeout : function(){
+
+			//Si on avait déjà un timeOut en attente d"execution pour le popup, on le coupe et reprend depuis le début
+			if( typeof self.pingTimeOutPopup !== undefined ){
+				clearTimeout(self.pingTimeOutPopup);
+			}
+
+			var timeoutTitle = 'Woops !'
+			var timeoutMsg = 'Connexion avec le serveur perdue :(<br/><br/>Le service sera indisponible tant que la liaison n\'est pas réétablie';
+			var notifyTxt = 'Reconnexion...';
+
+			//Création d'un timeout qui fera apparaitre le message d'erreur
+			//Le timeout permet de ne pas déclencher l'alerte pour rien la connexion est réétablie dans les secondes qui suivent
+			self.pingTimeOutPopup = setTimeout(function(){
+
+				//On va fermer toutes les alerter ou notices alertify sur l'ecran du user
+				alertify.closeAll()
+				alertify.dismissAll();
+
+				//On fait apparaitre l'alerte
+				alertify
+				.alert('Connexion perdue', timeoutMsg)
+				.set('onok', function(closeEvent){
+
+					//Apparition du gif overlay
+					$('#overlay-transparent-loader').removeClass('hidden')
+					
+					alertify.error(notifyTxt, 0);
+				
+				});
+
+				//Remise à 0 de la variable contenant la function pingtimeoutpopup
+				self.pingTimeOutPopup = undefined;
+
+			},3000);
 
 		},
 

@@ -13,6 +13,8 @@
 		//Permettra de garder en mémoire une musique à forcer lorsque le client dialoguera avec le serveur io pour changer une musique
 		musicSelected : null,
 
+		linkServerEnabled : false,
+
 		serverAdress : '192.168.1.32:1337',
 
 		initialize : function(){
@@ -20,8 +22,22 @@
 			//Etablissement de la connection bidrectionelle entre le serveur et le clients présent
 			self.conn = io.connect(self.serverAdress);
 
+			//Gestion perte de la liaison full duplex avec le serveur
+			self.conn.on('disconnect', function(){
+				
+				//Les vannes sont fermées l'autre bout ne répond plus. 
+				self.linkServerEnabled = false;
+
+				//Gestion de l'erreur 
+				YoutubePlayer.pingTimeout();
+
+			});
+
 			//Listener de connection établie
 			self.conn.on('connect', function(data){
+
+				//Les vannes sont ouvertes
+				self.linkServerEnabled = true;
 
 				//Permet de ne pas init deux fois sur le même client (voir definitition de l'attribut)
 				if(!self.youtubePlayerInitialized){
@@ -160,6 +176,9 @@
 
 			self.conn.emit('reSyncUser', reSyncObject);
 
+			//Popup de reconnection sur écran
+			YoutubePlayer.reSynced();
+
 		},
 
 		/**
@@ -223,7 +242,7 @@
 
 			self.conn.emit('music-download');
 
-		}
+		},
 
 	};
 

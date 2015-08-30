@@ -1,7 +1,7 @@
 body,html{
-padding: 0;
-margin: 0;
-background-color:#F6F4F1;
+    padding: 0;
+    margin: 0;
+    background-color:#F6F4F1;
 }
 
 /**
@@ -23,6 +23,13 @@ background-color:#F6F4F1;
     width: 50px;
     height: 57px;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -28px 0 0 -25px;
+}
+#overlay-transparent-loader{
+    position:fixed;
+    z-index:99999;
     top: 50%;
     left: 50%;
     margin: -28px 0 0 -25px;
