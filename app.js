@@ -58,7 +58,7 @@ var express = require('express'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
 	audioTools = require('./lib/audioTools'),	//audioTools lib permettant les interractions musicales sur la machine
-	socketsRoutes = require('./lib/socketsRoutes');	//socketsRoutes les routes socket io
+	SocketRoutes = require('./lib/SocketsRoutes');	//SocketRoutes les routes socket io
 
 process.title = 'open-dj';
 
@@ -119,6 +119,6 @@ server.listen(app.get('port'), function(){
 	console.log('\nOpen-dj is running on port ' + app.get('port'));
 
 	//Ouverture des vannes sockets
-	socketsRoutes.init(io, audioTools);
+	SocketRoutes.init(io, audioTools);
 
 });
