@@ -233,17 +233,6 @@
 
 		},
 
-		/**
-		 * [downloadMusic Demande l'autorisation au serveur pour télécharger une musique]
-		 * 
-		 * @return {[void]}
-		 */
-		downloadMusic : function(){
-
-			self.conn.emit('music-download');
-
-		},
-
 	};
 
 	var self = SocketManager;

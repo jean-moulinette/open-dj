@@ -108,18 +108,6 @@
 
 			});
 
-			//Listener download-song qui permet de télècharger une musique en cours de lecture
-			$('.music-download').on('click',function(e){
-
-				//Stop event original
-				e.preventDefault();
-
-				//Lancement de la fonction de téléchargement
-				SocketManager.downloadMusic();
-				
-
-			});
-
 			//log
 			$('.ask-server').on('click', function(e){
 
@@ -508,22 +496,6 @@
 			window.scrollTo(0,0);
 
 			SocketManager.pageSwitch(self.currentPage);
-
-		},
-
-		/**
-		 *	getSongFile
-		 *
-		 *	Cette function à pour but d'ouvrir le pop up de téléchargement de la chanson en cours de lecture
-		 *
-		 *	@param: { array } - serverPlaylist - Le tableau playlist du serveur
-		 *
-		 *	@return: { void } 
-		 */
-		getSongFile : function(serverPlaylist){
-
-			//Reception dynamique du fichier à télécharger (ouvre un prompt de DL)
-			window.location.assign('http://'+SocketManager.serverAdress+'/download');
 
 		},
 
