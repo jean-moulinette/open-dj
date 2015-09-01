@@ -15,7 +15,7 @@
 
 		linkServerEnabled : false,
 
-		serverAdress : '192.168.1.32:1337',
+		serverAdress : '192.168.1.61:1337',
 
 		initialize : function(){
 
@@ -139,13 +139,6 @@
 				self.musicSelected = music;
 
 				YoutubePlayer.initAlertChoice();
-
-			});
-
-			//Listener dee reception de l'url de téléchargement de la musique
-			self.conn.on('song-download-accepted', function(){
-
-				YoutubePlayer.getSongFile();
 
 			});
 
