@@ -74,9 +74,7 @@ app.get('/', function (req, res) {
 });
 
 //Route de telechargement d'une musique
-app.get('/download', function(req, res){
-	audioTools.resolveDownload(req, res);
-});
+app.get('/download', audioTools.resolveDownload);
 
 /**
  *	Objet global au serveur qui sera nourri lors des lectures de musiques
