@@ -89,7 +89,7 @@ app.get('/download', audioTools.resolveDownload);
  *	process - { Child Process } - Le child process de lecture de la musique
  *	playlist - { object } - Objet contenant les videos en fil d'attente de lecture
  */
-playingStatus = {
+serverGlobal = {
 
 	VlcApi:VlcApi,
 
@@ -112,7 +112,7 @@ playingStatus = {
 };
 
 //Alias pour la playlist
-serverPlaylist = playingStatus.playlist;
+serverPlaylist = serverGlobal.playlist;
 
 //Ouverture des vannes TCP !
 server.listen(app.get('port'), function(){
