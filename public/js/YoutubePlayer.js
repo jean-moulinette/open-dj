@@ -500,6 +500,28 @@
 		},
 
 		/**
+		 *	forbidDownload
+		 *
+		 *	Triggered when the song is finished to avoid user attempting to click the download link
+		 *
+		 *	@param: socketData - {object} - Contient le 
+		 *
+		 *	@return: {void}
+		 */
+		forbidDownload : function(socketData){
+
+			$('.music-download').prop('href', '#!')
+			.click(function(event){
+				event.preventDefault();
+			});
+
+
+			//Fais apparaitre une annonce via alertify
+			alertify.warning(annoucement);
+
+		},
+
+		/**
 		 *	resynced, 
 		 *
 		 *	préviens l'utilisateur qu'il viens de se resynchroniser avec le serveur IO 
