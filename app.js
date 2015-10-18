@@ -57,7 +57,8 @@ var express = require('express'),
 	path = require('path'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
-	audioTools = require('./lib/audioTools'),	//audioTools lib permettant les interractions musicales sur la machine
+	VlcApi = require('./lib/VlcApi.js').init(),		//API audio pour VLC
+	audioTools = require('./lib/audioTools'),		//audioTools lib permettant les interractions musicales sur la machine
 	SocketRoutes = require('./lib/SocketsRoutes');	//SocketRoutes les routes socket io
 
 process.title = 'open-dj';
@@ -79,6 +80,7 @@ app.get('/download', audioTools.resolveDownload);
 /**
  *	Objet global au serveur qui sera nourri lors des lectures de musiques
  *
+ *	VlcApi - { object } - Module maison pour controler VLC sur la machine
  *	on - { boolean } - true si une lecture est en cours
  *	managing - { boolean } - true si le serveur est en train de traiter une demande
  *	musicTitle - { string } - Titre de la musique en cours
@@ -88,6 +90,8 @@ app.get('/download', audioTools.resolveDownload);
  *	playlist - { object } - Objet contenant les videos en fil d'attente de lecture
  */
 playingStatus = {
+
+	VlcApi:VlcApi,
 
 	on:false,
 
