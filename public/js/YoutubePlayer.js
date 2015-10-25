@@ -75,7 +75,7 @@
 				//Stop event original
 				e.preventDefault();
 
-				self.modifyVolume(e, 'up');
+				SocketManager.modifyVolume('up');
 
 			});
 
@@ -84,7 +84,7 @@
 				//Stop event original
 				e.preventDefault();
 
-				self.modifyVolume(e, 'down');
+				SocketManager.modifyVolume('down');
 
 			});
 
@@ -341,16 +341,8 @@
 		 */
 		updateCurrentMusic : function(title){
 
-			//Si le client vient d'arriver et que le serveur lui indique qu'une musique est deja en cours de téléchargement
-			if(title === 'downloading'){
-				//On donne l'infos dans le menu headr
-				title = 'Téléchargement d\'une musique en cours...';
-
-				//Et il prend l'overlay bloquant dans sa trogne
-				self.toggleOverlay();
-			}
-
 			$('.playing-now-title').text('    '+title);
+
 		},
 
 		/**
@@ -430,19 +422,6 @@
 		},
 
 		/**
-		 *	modifyVolume
-		 *
-		 *	Permet de diminuer/augmenter le volume de la musique diffusée 	
-		 *
-		 *	@param: {string} - choice - up/down 
-		 *
-		 *	@return: {void}
-		 */
-		modifyVolume : function(event, choice){
-			SocketManager.conn.emit('modifyVolume', choice);
-		},
-
-		/**
 		 *	loading
 		 *
 		 *	fonction permettant la mise en place d'un overlay bloquant
@@ -496,28 +475,6 @@
 			window.scrollTo(0,0);
 
 			SocketManager.pageSwitch(self.currentPage);
-
-		},
-
-		/**
-		 *	forbidDownload
-		 *
-		 *	Triggered when the song is finished to avoid user attempting to click the download link
-		 *
-		 *	@param: socketData - {object} - Contient le 
-		 *
-		 *	@return: {void}
-		 */
-		forbidDownload : function(socketData){
-
-			$('.music-download').prop('href', '#!')
-			.click(function(event){
-				event.preventDefault();
-			});
-
-
-			//Fais apparaitre une annonce via alertify
-			alertify.warning(annoucement);
 
 		},
 

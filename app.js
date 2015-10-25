@@ -57,7 +57,7 @@ var express = require('express'),
 	path = require('path'),
 	methodOverride = require('method-override'),
 	io = require('socket.io').listen(server),
-	VlcApi = require('./lib/VlcApi.js').init(),		//API audio pour VLC
+	VlcApi = require('./lib/VlcApi.js'),		//API audio pour VLC
 	audioTools = require('./lib/audioTools'),		//audioTools lib permettant les interractions musicales sur la machine
 	SocketRoutes = require('./lib/SocketsRoutes');	//SocketRoutes les routes socket io
 
@@ -121,6 +121,6 @@ server.listen(app.get('port'), function(){
 	console.log('\nOpen-dj is running on port ' + app.get('port'));
 
 	//Ouverture des vannes sockets
-	SocketRoutes.init(io, audioTools);
+	SocketRoutes.init(io, audioTools, VlcApi);
 
 });

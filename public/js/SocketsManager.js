@@ -15,7 +15,7 @@
 
 		linkServerEnabled : false,
 
-		serverAdress : '192.168.1.61:1337',
+		serverAdress : '192.168.1.32',
 
 		initialize : function(){
 
@@ -107,23 +107,6 @@
 				YoutubePlayer.updateCurrentMusic(data);
 			});
 
-			//Listener de musique en cours de téléchargement sur le serveur
-			self.conn.on('download-start', function(data){
-
-				//Mise en place d'loverlay d'attente pour les clients
-				YoutubePlayer.toggleOverlay();
-
-			});
-
-			//Listener de fin de téléchargement
-			self.conn.on('download-over', function(data){
-				
-				//Enlevement de l'overlay d'attente chez les clients	
-				if($('#overlay').is(':visible')){
-					YoutubePlayer.toggleOverlay();
-				}
-			
-			});
 
 			//Listener d'annonce serveur
 			self.conn.on('annoucement', function(annoucement){
@@ -188,8 +171,6 @@
 			self.conn.emit('forceChange', self.musicSelected);
 
 			self.musicSelected = null;
-
-			alertify.warning('Demande envoyée !');
 		},
 
 		/**
@@ -209,6 +190,19 @@
 			//Lance la requete d'ajout vers le serveur IO
 			self.conn.emit('playlist', self.musicSelected);
 
+		},
+
+		/**
+		 *	modifyVolume
+		 *
+		 *	Permet de diminuer/augmenter le volume de la musique diffusée 	
+		 *
+		 *	@param: {string} - choice - up/down 
+		 *
+		 *	@return: {void}
+		 */
+		modifyVolume : function(choice){
+			self.conn.emit('modifyVolume', choice);
 		},
 
 		/**
