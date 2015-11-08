@@ -8,8 +8,6 @@
  * 	@Project: A simple personnal DIY node.js server which aim to make your local speakers accessible from web clients.
  *
  *	@Copyright (c) <2014> <Jean Baptiste PRIAM MASSAT>
- * 
- * 	@if you are reading this: You are an idiot. 
  *
  ************************************** 
  */
@@ -59,19 +57,27 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
 	VlcApi = require('./lib/VlcApi.js'),		//API audio pour VLC
 	audioTools = require('./lib/audioTools'),		//audioTools lib permettant les interractions musicales sur la machine
-	SocketRoutes = require('./lib/SocketsRoutes');	//SocketRoutes les routes socket io
+	SocketRoutes = require('./lib/SocketsRoutes'),	//SocketRoutes les routes socket io
+	config = require('./open-dj.conf.js');
 
 process.title = 'open-dj';
 
-app.set('port', process.env.TEST_PORT || 1337);
+app.set('port', config.port || 1337);
 
 app.use(methodOverride());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('views', __dirname + '/views');
+
+app.set('view engine', 'ejs');
+
 //Routes
 app.get('/', function (req, res) {
-	res.sendfile(__dirname + '/public/index.html');
+	res.render('index.ejs', {
+		host:config.host,
+		port:config.port
+	});
 });
 
 //Route de telechargement d'une musique
@@ -107,7 +113,11 @@ serverGlobal = {
 
 	process:null,
 
-	playlist:{}
+	playlist:{},
+
+	host:config.host,
+
+	port:config.port
 
 };
 

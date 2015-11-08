@@ -29,7 +29,6 @@
 
 					<ul id="slide-out" class="side-nav">
 
-						<li><span class="playing-now-title left-align teal-text text-lighten-1 truncate center-align" style="font-weight:bold;">En attente...</span></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-teal center-align volume-up"><i class="medium material-icons">volume_up</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-teal center-align volume-down"><i class="medium material-icons">volume_down</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-resume"><i class="medium material-icons">play_arrow</i></a></li>
@@ -41,7 +40,6 @@
 					<!-- Navigation desktop-->
 					<ul class="right hide-on-med-and-down">
 
-						<li><a href="#!" onclick="event.preventDefault();"><i class="mdi-av-hearing left"></i><span class="playing-now-title marquee">En attente d'une demande de lecture</span></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-up"><i class="medium material-icons">volume_up</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-down"><i class="medium material-icons">volume_down</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-resume"><i class="medium material-icons">play_arrow</i></a></li>
@@ -179,6 +177,9 @@
 			</div>
 
 		</div>
+
+		<!-- ejs init param getter -->
+		<div id="config" data-host="<%= host %>" data-port="<%= port %>"></div>
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="js/jquery-2.0.1.min.js"></script>

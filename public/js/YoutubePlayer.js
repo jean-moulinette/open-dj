@@ -330,35 +330,6 @@
 		},
 
 		/**
-		 *	updateCurrentMusic
-		 *
-		 *	Fonction de mise à jour du titre de la musique en cours lorsque le serveur va jouer un titre
-		 *	Cette fonction sera potentiellement partagée pour tous les clients connectés en même temps 	
-		 *
-		 *	@param: {string} - title - Le titre de la musique
-		 *
-		 *	@return: {void} - vide néant rien quedalle nada  
-		 */
-		updateCurrentMusic : function(title){
-
-			$('.playing-now-title').text('    '+title);
-
-		},
-
-		/**
-		 *	updatePlaylist
-		 *
-		 *	Actualise la playlist chez le client 	
-		 *
-		 *	@param: {playlist} - playlistObject - L'objet contenant les vidéos
-		 *
-		 *	@return: {void}
-		 */		
-		updatePlaylist : function(playlist){
-
-		},
-
-		/**
 		 *	initAlertChoice
 		 *
 		 *	Ouvre la modal de proposition d'action au niveau du lecteur de musique

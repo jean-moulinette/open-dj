@@ -15,12 +15,19 @@
 
 		linkServerEnabled : false,
 
-		serverAdress : '192.168.1.32',
-
 		initialize : function(){
 
+			//Récuperation des config serveur
+			var host = $('#config').data('host'),
+			port = $('#config').data('port');
+
+			//Destruction de la div config
+			$('#config').remove();
+
+			var address = ( port.length > 0 ) ? host + ':' + port : host;
+
 			//Etablissement de la connection bidrectionelle entre le serveur et le clients présent
-			self.conn = io.connect(self.serverAdress);
+			self.conn = io.connect(address);
 
 			//Gestion perte de la liaison full duplex avec le serveur
 			self.conn.on('disconnect', function(){
@@ -84,7 +91,7 @@
 				
 				}
 
-				//A partir de la deuxieme page, on affiche le bouton precedant
+				//A partir de la deuxieme page, on affiche le bouton precedent
 				if(YoutubePlayer.currentPage >= 2){
 
 					if( !$('#page-prev').is(':visible') ){
