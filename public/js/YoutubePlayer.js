@@ -472,11 +472,7 @@
 				alertify.dismissAll();
 				$('#overlay-transparent-loader').addClass('hidden')
 
-				var canDismiss = false;
-				var notification = alertify.success('Connexion rétablie !<br/>Bonne écoute sur Open-Dj');
-
-				notification.ondismiss = function(){ return canDismiss; };
-				setTimeout(function(){ canDismiss = true;}, 5000);
+				alertify.success('Connexion rétablie !<br/>Bonne écoute sur Open-Dj');
 
 				self.reSyncPopup = undefined;
 
