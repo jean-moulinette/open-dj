@@ -1,7 +1,7 @@
 var config =  {};
 
 //Set local ip or dns of your server
-config.host = '192.168.1.32';
+config.host = '';
 
 //Set port
 config.port = '';
