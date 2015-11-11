@@ -43,6 +43,27 @@ body,html{
 }
 
 /**
+ *  Style sur menu mobile
+ */
+.opendj-mobile-menu{
+    padding-top:25%;
+}
+
+/**
+ *  Empeche un décalage des boutons qui gache completement les animations dans le menu mobile
+ */
+#slide-out li{
+    padding:0px;
+}
+
+/**
+ *  Garde un alignement vertical correct dans les boutons du menu mobile
+ */
+#slide-out i{
+    line-height:inherit;
+}
+
+/**
  *	Surcharge du z-index du module des alertes
  *	
  *	Pour faire en sorte qu'il se trouve au dessus du menu site
