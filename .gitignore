@@ -2,6 +2,9 @@
 logs
 *.log
 
+# Conf
+open-dj.conf.js
+
 # Runtime data
 pids
 *.pid
