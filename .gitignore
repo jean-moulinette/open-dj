@@ -4,6 +4,8 @@ logs
 
 # Conf
 open-dj.conf.js
+# git update-index --assume-unchanged open-dj.conf.js pour ignorer les changements dessus
+# git update-index --no-assume-unchanged open-dj.conf.js pour de nouveau avoir les changements dessus
 
 # Runtime data
 pids
