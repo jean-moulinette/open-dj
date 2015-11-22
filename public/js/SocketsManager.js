@@ -132,6 +132,13 @@
 
 			});
 
+			//Listener de reception de la valeur du volume de la musique
+			self.conn.on('volume-value', function(volumeValue){
+
+				console.log(volumeValue);
+
+			})
+
 			//Listener des echanges IO concernant la playlist
 			self.conn.on('playlist', function(serverPlaylist){
 
