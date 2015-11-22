@@ -80,7 +80,7 @@ app.get('/', function (req, res) {
 	});
 });
 
-//Route de telechargement d'une musique
+//Route de telechargement d'une musique (DEPRECATED)
 app.get('/download', audioTools.resolveDownload);
 
 /**
