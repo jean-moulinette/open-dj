@@ -463,7 +463,9 @@
 		 */
 		setVolumeIndicator : function(volume){
 
-			$('.volume-indicator').text(volume + '%');
+			$('.volume-indicator').each(function(){
+				$(this).text(volume);
+			});
 			
 		},
 
