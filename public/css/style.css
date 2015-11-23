@@ -36,6 +36,13 @@ body,html{
 }
 
 /**
+ *  Petit décalage vers la gauche sur l'icone d'ouverture du menu mobile
+ */
+nav .button-collapse{
+    margin-left:1em;
+}
+
+/**
  *	Surcharge de la classe bootstrap pour avoir le menu par dessus l'overlay d'attente
  */
 .navbar-fixed-top{
