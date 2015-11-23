@@ -60,29 +60,6 @@ var express = require('express'),
 	SocketRoutes = require('./lib/SocketsRoutes'),	//SocketRoutes les routes socket io
 	config = require('./open-dj.conf.js');
 
-process.title = 'open-dj';
-
-app.set('port', config.port || 1337);
-
-app.use(methodOverride());
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.set('views', __dirname + '/views');
-
-app.set('view engine', 'ejs');
-
-//Routes
-app.get('/', function (req, res) {
-	res.render('index.ejs', {
-		host:config.host,
-		port:config.port
-	});
-});
-
-//Route de telechargement d'une musique (DEPRECATED)
-app.get('/download', audioTools.resolveDownload);
-
 /**
  *	Objet global au serveur qui sera nourri lors des lectures de musiques
  *
@@ -120,6 +97,33 @@ serverGlobal = {
 	port:config.port
 
 };
+
+process.title = 'open-dj';
+
+app.set('port', config.port || 1337);
+
+app.use(methodOverride());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('views', __dirname + '/views');
+
+app.set('view engine', 'ejs');
+
+//Routes
+app.get('/', function (req, res) {
+	
+	res.render('index.ejs', {
+		host : config.host,
+		port : config.port,
+		volume : VlcApi.volumePercentVal
+	});
+
+});
+
+//Route de telechargement d'une musique (DEPRECATED)
+app.get('/download', audioTools.resolveDownload);
+
 
 //Alias pour la playlist
 serverPlaylist = serverGlobal.playlist;

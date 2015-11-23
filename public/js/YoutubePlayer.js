@@ -453,6 +453,21 @@
 		},
 
 		/**
+		 *	setVolumeIndicator, 
+		 *
+		 *	Récupere la nouvelle valeur du volume VLC depuis socket io et l'integre dans la page du user
+		 *
+		 *	@param: volume - {string} - valeur du volume
+		 *
+		 *	@return: { void }	
+		 */
+		setVolumeIndicator : function(volume){
+
+			$('.volume-indicator').text(volume + '%');
+			
+		},
+
+		/**
 		 *	resynced, 
 		 *
 		 *	préviens l'utilisateur qu'il viens de se resynchroniser avec le serveur IO 

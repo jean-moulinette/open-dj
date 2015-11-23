@@ -53,7 +53,15 @@ nav .button-collapse{
  *  Style sur menu mobile
  */
 .opendj-mobile-menu{
-    padding-top:25%;
+    padding-top:16%;
+}
+
+/**
+ *  Indicateur de volume
+ */
+.volume-indicator-full-text{
+    font-family:Roboto-Bold;
+    font-size:1.2em;
 }
 
 /**
