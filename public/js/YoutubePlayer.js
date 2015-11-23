@@ -342,13 +342,16 @@
 		initAlertChoice : function(){
 
 			//On fait apparaitre l'alerte
-			alertify.confirm().set({
+			var alert = alertify.confirm().set({
 
 				message:'Une musique est déjà en cours de lecture...',
 
-				onok:SocketManager.forceMusic,
+				onok : SocketManager.forceMusic,
 
-				oncancel:SocketManager.addPlaylist,
+				oncancel : function(event){
+					console.log(event);
+					SocketManager.addPlaylist;
+				},
 
 				labels:{
 					ok:'Fait péter le son !',
@@ -511,8 +514,7 @@
 				alertify.dismissAll();
 
 				//On fait apparaitre l'alerte
-				alertify
-				.alert('Connexion perdue', timeoutMsg)
+				alertify.alert('Connexion perdue', timeoutMsg)
 				.set('onok', function(closeEvent){
 
 					//Apparition du gif overlay
