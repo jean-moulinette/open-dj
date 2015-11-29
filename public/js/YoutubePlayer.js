@@ -108,13 +108,36 @@
 
 			});
 
-			//log
-			$('.ask-server').on('click', function(e){
+			//Switch theme
+			$('.switch-theme').on('click', function(e){
 
 				//Stop event original
 				e.preventDefault();
 
-				SocketManager.conn.emit('ask-server');
+				var currentTheme = $('html').css('background-color')
+				var newTheme;
+
+				//On passe du theme lumineu au theme sombre
+				if(currentTheme === 'rgb(246, 244, 241)'){
+
+					newTheme = {
+						'background-color' : '#242220',
+						'color' : 'white'
+					};
+
+				}else{
+
+					newTheme = {
+						'background-color' : '#F6F4F1',
+						'color' : 'black'
+					};
+
+				}
+
+				//Application du theme sur les markup html+body
+				$('html,body').each(function(){
+					$(this).css(newTheme);
+				});
 
 			});
 
@@ -344,13 +367,26 @@
 			//On fait apparaitre l'alerte
 			var alert = alertify.confirm().set({
 
+				modal : false,
+
 				message:'Une musique est déjà en cours de lecture...',
 
-				onok : SocketManager.forceMusic,
+				//Forcer musique
+				onok : function(){
 
+					SocketManager.forceMusic();
+
+					//Destruction des ordures laissés dans le DOM par le plugin
+					$('.alertify').remove();
+				},
+
+				//Ajout dans la playlist
 				oncancel : function(event){
-					console.log(event);
-					SocketManager.addPlaylist;
+
+					SocketManager.addPlaylist();
+
+					//Destruction des ordures laissés dans le DOM par le plugin
+					$('.alertify').remove();
 				},
 
 				labels:{
@@ -361,6 +397,21 @@
 				title:'C\'est embarassant...'
 
 			}).show(); 
+
+			//hack maison pour chopper uniquement l'event du clic sur la croix sans déclencher celui du bouton cancel
+			$('.ajs-close').on('click', function(event){
+				
+				event.preventDefault();
+				
+				//Fermeture de l'alerte
+				alertify.closeAll();
+
+				//Destruction des ordures laissés dans le DOM par le plugin
+				$('.alertify').remove();
+				
+				//Blocage de toute propagation/bubbling
+				return false;
+			});
 
 		},
 
@@ -487,7 +538,7 @@
 
 			self.reSyncPopup = setTimeout(function(){
 
-				//On va fermer toutes les alerter ou notices alertify sur l'ecran du user
+				//On va fermer toutes les alerte ou notices alertify sur l'ecran du user
 				alertify.closeAll()
 				alertify.dismissAll();
 				$('#overlay-transparent-loader').addClass('hidden')
@@ -562,7 +613,7 @@
 		refreshPlaylist : function(serverPlaylist){
 
 			//Reception de l'objet playlist du serveur
-			console.log(serverPlaylist);
+			//console.log(serverPlaylist);
 
 		}
 	

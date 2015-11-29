@@ -90,6 +90,8 @@ serverGlobal = {
 
 	process:null,
 
+	//Contiendra chaques videos ajoutées dans la playlist,
+	// sera utile si je souhaite les interfacer un jour
 	playlist:{},
 
 	host:config.host,
