@@ -1,0 +1,44 @@
+########################################
+########################################
+########################################
+#Options precedentes 
+
+http {
+
+
+	##
+	# Logging Settings
+	##
+
+	access_log /var/log/nginx/access.log;
+	
+	##############################################
+	#Rajouter info pour avoir un log plus détaillé
+	##############################################
+	error_log /var/log/nginx/error.log info;
+
+
+	##
+	# Virtual Host Configs
+	##
+	#Sur le port80
+	#Ecoute le connections et redirige les sur localhost port 1337
+	#Configuration du header jupgrade pour sockerio
+	#Configuration du header Connection :"upgrade" pour
+	#avoir une pleine compatibilité avec les websockets
+	#voir https://www.nginx.com/blog/websocket-nginx/#gs.7X3f3A8
+	server {
+			listen	80;
+			server_name open-dj;
+			location / {
+					proxy_pass http://127.0.0.1:1337/;
+					proxy_http_version 1.1;
+					proxy_set_header Upgrade $http_upgrade;
+					proxy_set_header Connection "upgrade";
+			}
+	}
+	include /etc/nginx/conf.d/*.conf;
+	#include /etc/nginx/sites-enabled/*;
+}
+
+
