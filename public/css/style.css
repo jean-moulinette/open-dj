@@ -109,3 +109,15 @@ nav .button-collapse{
     white-space:nowrap;
     text-overflow:ellipsis;
 }
+
+/**
+ *  Surcharge notifs et dialogs alertifyJS
+ *  Permet de garder la police noire en cas
+ *  de passage sur le theme sombre
+ */
+.ajs-message{
+    color:black !important;
+}
+.ajs-dialog{
+    color:black !important;
+}
