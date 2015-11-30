@@ -68,14 +68,13 @@ Installing npm dependencies:
 ----------------------------------------------------
 
 Now that you have cloned the repo and installed npm dependencies, 
-
 you must edit the file "open-dj-conf.js" using nano or whatever.
 
 ---------------------------------------------------
 
-    config.host "set local ip or dns of the server running open-dj"
+    config.host = "set local ip or dns of the server running open-dj"
     
-    config.port "set port"
+    config.port = "set port"
 
 ---------------------------------------------------
   
