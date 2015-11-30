@@ -50,9 +50,9 @@ Now you're ready to install open-dj.
 ## Using an HTTP server
 
 I personally use Nginx to host open-dj on my computer, this is very usefull as i can set a reverse proxy on the port used by open-dj
-redirecting it the port 80 allowing you to just type the ip/dns of your server in your favorite browser address bar without specifying any port.
+redirecting it to the port 80 allowing your users to just type the ip/dns of your server in their favorite browser address bar without specifying any port.
 
-You can find a file named * **nginx.conf.exemple** at the root of the repo wich will give you exemples.
+You can find a file named **nginx.conf.exemple** at the root of the repo wich will give you exemples.
 There is a few very important settings for getting websocket server working well.
 
 You can refer to http://nginx.org/en/docs/ for further informations.
