@@ -114,7 +114,7 @@
 				//Stop event original
 				e.preventDefault();
 
-				var currentTheme = $('html').css('background-color')
+				var currentTheme = $('html').css('background-color');
 				var newTheme;
 
 				//On passe du theme lumineu au theme sombre
@@ -427,8 +427,6 @@
 		 */
 		addItemToServerPlaylist : function(){
 
-			music = SocketManager.musicSelected;
-
 			for(var item in self.playlist){
 
 				if(item === SocketManager.musicSelected){
@@ -539,9 +537,9 @@
 			self.reSyncPopup = setTimeout(function(){
 
 				//On va fermer toutes les alerte ou notices alertify sur l'ecran du user
-				alertify.closeAll()
+				alertify.closeAll();
 				alertify.dismissAll();
-				$('#overlay-transparent-loader').addClass('hidden')
+				$('#overlay-transparent-loader').addClass('hidden');
 
 				alertify.success('Connexion rétablie !<br/>Bonne écoute sur Open-Dj');
 
@@ -569,7 +567,7 @@
 				clearTimeout(self.pingTimeOutPopup);
 			}
 
-			var timeoutTitle = 'Woops !'
+			var timeoutTitle = 'Woops !';
 			var timeoutMsg = 'Connexion avec le serveur perdue :(<br/><br/>Le service sera indisponible tant que la liaison n\'est pas réétablie';
 			var notifyTxt = 'Reconnexion...';
 
@@ -578,7 +576,7 @@
 			self.pingTimeOutPopup = setTimeout(function(){
 
 				//On va fermer toutes les alerter ou notices alertify sur l'ecran du user
-				alertify.closeAll()
+				alertify.closeAll();
 				alertify.dismissAll();
 
 				//On fait apparaitre l'alerte
@@ -586,7 +584,7 @@
 				.set('onok', function(closeEvent){
 
 					//Apparition du gif overlay
-					$('#overlay-transparent-loader').removeClass('hidden')
+					$('#overlay-transparent-loader').removeClass('hidden');
 					
 					alertify.error(notifyTxt, 0);
 				

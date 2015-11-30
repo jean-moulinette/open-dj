@@ -137,7 +137,7 @@
 
 				YoutubePlayer.setVolumeIndicator(volumeValue);
 
-			})
+			});
 
 			//Listener des echanges IO concernant la playlist
 			self.conn.on('playlist', function(serverPlaylist){
@@ -162,7 +162,7 @@
 			//On va envoyer un objet qui permettra au server de resynchroniser le socket avec son activité passé
 			var reSyncObject = {
 				searchingPattern : YoutubePlayer.lastSearchedPattern
-			}
+			};
 
 			self.conn.emit('reSyncUser', reSyncObject);
 
