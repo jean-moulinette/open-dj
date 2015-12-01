@@ -187,8 +187,14 @@
 		<script src="js/jquery-2.0.1.min.js"></script>
 		<script src="js/materialize.min.js"></script>
 		<script src="js/alertify.min.js"></script>
-		<script src="js/YoutubePlayer.js"></script>
-		<script src="js/SocketsManager.js"></script>
+	
+		<!-- Chargement des scripts -->
+		<% if(dev === true){ %>
+			<script src="js/YoutubePlayer.js"></script>
+			<script src="js/SocketsManager.js"></script>
+		<% } else{ %>
+			<script src="js/Build/open.dj.min.js"></script>
+		<% } %>
 
 	</body>
 
