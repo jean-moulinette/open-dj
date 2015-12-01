@@ -115,11 +115,10 @@ app.set('view engine', 'ejs');
 //Routes
 app.get('/', function (req, res) {
 	
-	res.render('index.ejs', {
-		host : config.host,
-		port : config.port,
-		volume : VlcApi.volumePercentVal
-	});
+	//On injecte la valeur du volume Vlc dans l'attribut volume de l'objet param pour ejs
+	config.volume = VlcApi.volumePercentVal;
+
+	res.render('index.ejs', config);
 
 });
 
