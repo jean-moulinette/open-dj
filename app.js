@@ -109,6 +109,8 @@ process.title = 'open-dj';
 
 app.set('port', config.port || 1337);
 
+app.use(require('compression')());
+
 app.use(methodOverride());
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -116,6 +118,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', __dirname + '/views');
 
 app.set('view engine', 'ejs');
+
+app.set('view options', { layout: false });
 
 //Routes
 app.get('/', function (req, res) {
