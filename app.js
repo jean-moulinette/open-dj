@@ -60,6 +60,11 @@ var express = require('express'),
 	SocketRoutes = require('./lib/SocketsRoutes'),	//SocketRoutes les routes socket io
 	config = require('./open-dj.conf.js');
 
+//Gestion oublis de configuration
+if( config.host === ''){
+	throw '\nYou must edit the file "open-dj.conf.js" with your server\'s ip to get open-dj working \n';
+} 
+
 /**
  *	Objet global au serveur qui sera nourri lors des lectures de musiques
  *
