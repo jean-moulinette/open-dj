@@ -1,5 +1,5 @@
 {
-  "name": "FanghornnTV",
+  "name": "open-dj",
   "version": "0.0.1",
   "private": false,
   "scripts": {
@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "~1.10.2",
+    "compression": "^1.6.0",
     "diacritics": "^1.2.1",
     "ejs": "^2.3.4",
     "express": "~4.11.1",
