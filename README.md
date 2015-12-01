@@ -84,7 +84,7 @@ you must edit the file "open-dj-conf.js" using nano or whatever.
 
     config.host = "set local ip or dns of the server running open-dj"
     
-    config.port = "set port"
+    config.port = "set port" (Only if you're not using a reverse proxy like mentionned above)
 
 ---------------------------------------------------
   
