@@ -158,6 +158,16 @@
 		 */
 		launchYtSearch : function(){
 
+			//Si la connection avec le serveur webSocket à été perdue
+			if( !SocketManager.linkServerEnabled ){
+
+				//Affichage message d'erreur
+				alertify.error('Recherche non disponible.');
+
+				return;
+
+			}
+
 			//Si l'utilisateur à une recherche en cours, je le kick de la fonction
 			if(self.searching){
 				return;
