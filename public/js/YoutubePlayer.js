@@ -461,14 +461,14 @@
 		 *
 		 *	Pompée sur le fiddle  http://jsfiddle.net/eys3d/402/
 		 *
-		 *	@param: {void}
+		 *	@param: {[boolean]}	forceRemove Permet de forcer la suppression
 		 *
 		 *	@return: {void}
 		 */
-		toggleOverlay : function(){
+		toggleOverlay : function(forceRemove){
 
 			//Si l'overlay est detecté on l'enléve à l'appel de la fonction
-			if($('#overlay').length > 0){
+			if($('#overlay').length > 0 || forceRemove === true){
 				
 				$('#overlay').remove();
 
@@ -552,6 +552,9 @@
 				$('#overlay-transparent-loader').addClass('hidden');
 
 				alertify.success('Connexion rétablie !<br/>Bonne écoute sur Open-Dj');
+
+				//Force suppression overlay si il est la
+				self.toggleOverlay(true);
 
 				self.reSyncPopup = undefined;
 
