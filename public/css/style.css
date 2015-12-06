@@ -79,6 +79,13 @@ nav .button-collapse{
 }
 
 /**
+ * Empeche la couleur blanche bloquée au survol qui fais mal aux yeux
+ */
+#slide-out :hover {
+    background-color: transparent !important;
+}
+
+/**
  *	Surcharge du z-index du module des alertes
  *	
  *	Pour faire en sorte qu'il se trouve au dessus du menu site
