@@ -9,9 +9,17 @@
 		<title>Open-Dj</title>
 		
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href="css/materialize.css" rel="stylesheet">
+		<link href="css/materialize.min.css" rel="stylesheet">
 		<link href="css/alertify.min.css" rel="stylesheet">
-		<link href="css/open-dj.css" rel="stylesheet" type="text/css">
+
+		<!-- Chargement des scripts -->
+		<% if(dev === true){ %>
+			<link href="css/open-dj.css" rel="stylesheet" type="text/css">
+		<% } else{ %>
+			<link href="css/Build/open-dj.min.css" rel="stylesheet" type="text/css">
+		<% } %>
+		
+	
 	</head>
 
 	<body>
