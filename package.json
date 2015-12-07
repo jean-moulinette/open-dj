@@ -1,6 +1,6 @@
 {
   "name": "open-dj",
-  "version": "0.0.1",
+  "version": "1.0",
   "private": false,
   "scripts": {
     "start": "node app.js"
