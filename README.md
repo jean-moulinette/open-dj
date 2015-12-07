@@ -4,6 +4,7 @@ A simple personnal DIY node.js server which aim to make your local speakers acce
 
 Please note that this project is for fun and learning, nothing serious.
 
+![open-dj_preview](http://i.imgur.com/ZfyUTZo.png)
 ## OS Support
 
 No windows
