@@ -44,7 +44,14 @@ Then you can proceed to the installation
 
 ---------------------------------------------------
 
-Don't forget to add the asterisk in the install apt statement, it will get you all the VLC plugins.
+Don't forget to add the asterisk in the install apt statement, it will get you all VLC's plugins.
+
+**It is also very recommanded to update the internal VLC youtube .lua script by replacing it with this one.**
+https://raw.githubusercontent.com/videolan/vlc/master/share/lua/playlist/youtube.lua
+
+Save it to your system (right click, save under), and replace the original one mostly located under **/usr/lib/vlc/lua/playlist/youtube.lua**
+
+If you don't do this, you'll maybe have serious issue for reading a youtube link with VLC, such as always getting a copyrights warning in open-dj. 
 
 Now you're ready to install open-dj.
 
