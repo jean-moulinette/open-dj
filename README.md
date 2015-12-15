@@ -1,6 +1,6 @@
 ## Synopsis
 
-A simple personnal DIY node.js server which aim to make your local speakers accessible from web clients.
+A simple personal DIY node.js server which aim to make your local speakers accessible from web clients.
 
 Please note that this project is for fun and learning, nothing serious.
 
@@ -46,21 +46,23 @@ Then you can proceed to the installation
 
 Don't forget to add the asterisk in the install apt statement, it will get you all VLC's plugins.
 
-**It is also very recommanded to update the internal VLC youtube .lua script by replacing it with this one.**
+## VLC's youtube.lua script
+
+**It is also very recommended to update the internal VLC youtube .lua script by replacing it with this one.**
 https://raw.githubusercontent.com/videolan/vlc/master/share/lua/playlist/youtube.lua
 
 Save it to your system (right click, save under), and replace the original one mostly located under **/usr/lib/vlc/lua/playlist/youtube.lua**
 
-If you don't do this, you'll maybe have serious issue for reading a youtube link with VLC, such as always getting a copyrights warning in open-dj. 
+If you don't do this, you'll may go through serious issues for reading a youtube link with VLC, such as always getting a copyrights warning in open-dj. 
 
 Now you're ready to install open-dj.
 
 ## Using an HTTP server
 
-I personally use Nginx to host open-dj on my computer, this is very usefull as i can set a reverse proxy on the port used by open-dj
-redirecting it to the port 80 allowing your users to just type the ip/dns of your server in their favorite browser address bar without specifying any port.
+I personally use Nginx to host open-dj on my computer, this is very useful as i can set a reverse proxy on the port used by open-dj
+redirecting it to the port 80 allowing your users to just type the ip/dns of your server in their favourite browser address bar without specifying any port.
 
-You can find a file named **nginx.conf.exemple** at the root of the repo wich will give you exemples.
+You can find a file named **nginx.conf.exemple** at the root of the repo which will give you examples.
 There is a few very important settings for getting websocket server working well.
 
 You can refer to http://nginx.org/en/docs/ for further informations.
@@ -92,7 +94,7 @@ you must edit the file "open-dj-conf.js" using nano or whatever.
 
     config.host = "set local ip or dns of the server running open-dj"
     
-    config.port = "set port" (Only if you're not using a reverse proxy like mentionned above)
+    config.port = "set port" (Only if you're not using a reverse proxy like mentioned above)
 
 ---------------------------------------------------
   
@@ -117,6 +119,8 @@ Please note that you won't be able to play any video protected by Youtube and Co
 This can be very frustrating but there is many songs that aren't protected even if they should have been.
 
 However, this can be a great opportunity to search and listening to creative contents.
+
+**Note that if you can't get a single video working well, this may be caused of an issue with youtube.lua VLC's script, _please refer to the section "VLC's youtube.lua script" in this document._**
 
 #### Have fun
 
