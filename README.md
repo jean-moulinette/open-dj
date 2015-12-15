@@ -24,7 +24,7 @@ VLC 2 (VideoLan) Debian release
 The best way to get vlc working well with open-dj is to install all vlc debian packages.
 The following steps worked like a charm for me on Debian 7.5 Wheezy using apt package manager.
 
-First, if VLC is already installed on your system, you must remove it properly like this. 
+First of all, if VLC is already installed on your system, you must remove it properly like this. 
 
 ---------------------------------------------------
 
@@ -51,19 +51,19 @@ Don't forget to add the asterisk in the install apt statement, it will get you a
 **It is also very recommended to update the internal VLC youtube .lua script by replacing it with this one.**
 https://raw.githubusercontent.com/videolan/vlc/master/share/lua/playlist/youtube.lua
 
-Save it to your system (right click, save under), and replace the original one mostly located under **/usr/lib/vlc/lua/playlist/youtube.lua**
+Save it to your system (right click, save under), and replace the original one which is mostly located under **/usr/lib/vlc/lua/playlist** directory.
 
-If you don't do this, you'll may go through serious issues for reading a youtube link with VLC, such as always getting a copyrights warning in open-dj. 
+If you don't do this, you'll may go through serious issues when reading a youtube link with VLC, such as always getting a copyrights warning in open-dj. 
 
 Now you're ready to install open-dj.
 
 ## Using an HTTP server
 
-I personally use Nginx to host open-dj on my computer, this is very useful as i can set a reverse proxy on the port used by open-dj
+I personally use Nginx to host open-dj, this is very useful as i can set a reverse proxy on the port used by open-dj
 redirecting it to the port 80 allowing your users to just type the ip/dns of your server in their favourite browser address bar without specifying any port.
 
 You can find a file named **nginx.conf.exemple** at the root of the repo which will give you examples.
-There is a few very important settings for getting websocket server working well.
+There is a few very important settings for getting open-dj's websocket server working well.
 
 You can refer to http://nginx.org/en/docs/ for further informations.
 
@@ -118,9 +118,9 @@ Please note that you won't be able to play any video protected by Youtube and Co
 
 This can be very frustrating but there is many songs that aren't protected even if they should have been.
 
-However, this can be a great opportunity to search and listening to creative contents.
+However, this can be a great opportunity to search and listen to creative contents.
 
-**Note that if you can't get a single video working well, this may be caused of an issue with youtube.lua VLC's script, _please refer to the section "VLC's youtube.lua script" in this document._**
+**If you can't get a single video working well, this may be caused of an issue with youtube.lua VLC's script, _please refer to the section "VLC's youtube.lua script" in this document._**
 
 #### Have fun
 
