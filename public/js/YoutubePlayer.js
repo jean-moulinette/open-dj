@@ -37,7 +37,7 @@
 		initialize : function(){
 
 			//Initialisation du menu mobile
-			$(".button-collapse").sideNav();
+			$('.button-collapse').sideNav();
 			
 			//Mise en place du listener sur le bouton de recherche de vidéos
 			$('#launch-search').on('click', function(e){
@@ -46,26 +46,6 @@
 
 				//Lancement de la fonction de recherche de vidéos de la classe 
 				self.launchYtSearch();
-
-			});
-
-			//Listener touche entrée pour lancer aussi la recherche de vidéos
-			$(document).on('keyup', function(e){
-
-				//Si l'utilisateur est en focus sur l'input texte
-				if($('#yt-search').is(':focus')){
-	
-					var code = e.keyCode || e.which;
-
-					if(code == 13){
-
-
-						e.preventDefault();
-
-						//Lancement de la fonction de recherche de vidéos de la classe 
-						self.launchYtSearch();
-					}
-				}
 
 			});
 
