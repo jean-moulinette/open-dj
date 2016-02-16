@@ -12,6 +12,13 @@
 		//Dispositif anti troll-spammeur. Bloquera les recherches pendant le traitement du serveur d'une recherche
 		searching : false,
 
+		//API route to request API for searching pattern on youtube
+		//Deux params /:pattern/:page
+		searchPatternApi : 'api/yt-search/',
+
+		//API route to play video on the server
+		playSoundApi : 'api/play-song',
+
 		//Permet de garder en mémoire le pattern de synchronisation
 		lastSearchedPattern : null,
 
@@ -169,7 +176,17 @@
 				//Mise en mémoire de la recherche dans la classe YoutubePlayer
 				self.lastSearchedPattern = inputVal.toLowerCase();
 
-				SocketManager.conn.emit('yt-search', inputVal);
+				//On va faire requeter l'API du serveur pour récuperer le resultat de la recherche
+				$.ajax({
+					type:'GET',
+					url: self.buildSearchUrl(),
+					success:YoutubePlayer.YtSearchResponse,
+					error:function(){
+						self.toggleOverlay();
+						self.searching = false;
+						alertify.error('Impossible de lancer une recherche :(');
+					}
+				});
 
 				//Mise en place de l'overlay de patience
 				self.toggleOverlay();
@@ -184,10 +201,14 @@
 		 *
 		 *	Function déclenchée lors de la réponse de socket.io concernant la recherche youtube
 		 *
-		 *	@param : { string } - data - La réponse de socket.io sous forme de string
+		 *	@param : { object } - data - La réponse du serveur
 		 */
 		YtSearchResponse : function(data){
-			
+	
+			data = $.parseJSON(data);
+
+			data = data.result;
+
 			//Filtrage de la réponse pour ne ressorir uniquement les élements intéréssants
 			data = self.getHtmlResult(data);
 
@@ -205,6 +226,42 @@
 
 			//Je botte le cul de l'overlay de patience
 			self.toggleOverlay();
+
+			//Si le scroller de page n'est pas visible
+			if( !$('#yt-result-scroller').is(':visible') ){
+
+				$('#yt-result-scroller').toggleClass('hidden');
+			
+			}
+			
+			//Si on est sur la premiere page de resultat, et que le bouton suivant n'est pas visible, on l'affiche
+			//Sinon on vérifie toujours qu'il est bien visible pour les autres pages si le nombre de résultats est égal à 20
+			if(self.currentPage == 1  && self.resultsCount == 20 || self.currentPage >= 2 && self.resultsCount == 20){
+				
+				if( !$('#page-next').is(':visible') ){
+					
+					$('#page-next').toggleClass('hidden');
+				
+				}
+			
+			}
+
+			//A partir de la deuxieme page, on affiche le bouton precedent
+			if(self.currentPage >= 2){
+
+				if( !$('#page-prev').is(':visible') ){
+
+					$('#page-prev').toggleClass('hidden');
+
+				}
+			
+			}else if(self.currentPage === 1 && $('#page-prev').is(':visible')){
+
+				//Si on est sur la premiere page de resultats et que le bouton "précédent est visible, on le cache"
+				$('#page-prev').toggleClass('hidden');
+
+			}
+
 		},
 
 		/**
@@ -223,28 +280,75 @@
 				return;
 			}
 
-			var musicTitle = $(video).parent().find('.result-block-title').text();
-
-			//Faire le process de capture d'image
-			var image = '';
-
-			var music = {
-				action: 'play',
-				id: video.href.split('v=')[1],
-				title: musicTitle,
-				image: image,
+			var video = {
+				id : video.href.split('v=')[1],
+				title : $(video).parent().find('.result-block-title').text(),
+				image : '' //work in progress 
 			};
 
-			//On communique au serveur la vidéo à télécharger et lire sur les hauts parleurs, il fera le café tout seul
-			SocketManager.conn.emit('video', music);
+			//Make an ajax call to the server's API
+			self.playSong(video, false);
 
 		},
 
+		/**
+		 *	playSong 	 Ask the server to play video
+		 *	
+		 *  @param: { object } -	[video]		 An object describing the video to play on VlcApi
+		 *  @param: { boolean } -	[force]		 A boolean which can force the audio request to play the song when one is already playing
+		 * 
+		 *	@return: { undefined }
+		 */
+		playSong : function(video, force){
+
+			//Building POST request params
+			var parametersObject = {
+				id:video.id,
+				title:video.title,
+				image:video.image,
+				force:force
+			};
+
+			var paramsEncoded = JSON.stringify(parametersObject);
+
+			//Requesting the server to play the song
+			$.ajax({
+				type:'POST',
+				url: self.playSoundApi,
+				contentType:'application/json; charset=utf-8',
+				dataType:'json',
+				data:paramsEncoded,
+				success: self.handlePlaySongResponse,
+				error: function(){
+					alertify.error('Impossible de lire la musique :(');
+				}
+			});
+
+		},
+
+		/**
+		 *	handlePlaySongResponse
+		 *	
+		 *  @param: { string } - The result from the API Call '/api/play-song'
+		 *
+		 *	@return: { undefined }
+		 */
+		handlePlaySongResponse : function(data){
+
+			//If the server gave back the video object, it means that he's already playing one
+			if(data.id){
+
+				//Launching alert choice to ask the user if he wants to force his song
+				self.initAlertChoice(data);
+
+			}
+
+		},
 
 		/**
 		 *	getHtmlResult
-		 *
-		 *	@param: { string } - Le code html brut renvoyé par la request node
+		 *	
+		 *  @param: { string } - Le code html brut renvoyé par la request node
 		 *
 		 *	@return: { string } - Le code HTML de la réponse épurée
 		 */
@@ -348,11 +452,11 @@
 		 *	Ouvre la modal de proposition d'action au niveau du lecteur de musique
 		 *	Permet de forcer/ajouter des musiques a la playlist partagée
 		 *
-		 *	@param: {string} - choice - up/down 
+		 *	@param: {object} -	[video]		The video that the user'll potentially force 
 		 *
-		 *	@return: {void}
+		 *	@return: {undefined}
 		 */
-		initAlertChoice : function(){
+		initAlertChoice : function(video){
 
 			//On fait apparaitre l'alerte
 			var alert = alertify.confirm().set({
@@ -364,44 +468,22 @@
 				//Forcer musique
 				onok : function(){
 
-					SocketManager.forceMusic();
+					//Forcing song request
+					self.playSong(video, true);
 
 					//Destruction des ordures laissés dans le DOM par le plugin
 					$('.alertify').remove();
-				},
 
-				//Ajout dans la playlist
-				oncancel : function(event){
-
-					SocketManager.addPlaylist();
-
-					//Destruction des ordures laissés dans le DOM par le plugin
-					$('.alertify').remove();
 				},
 
 				labels:{
-					ok:'Fait péter le son !',
-					cancel:'Ajouter à la playlist'
+					ok:'Forcer ma musique',
+					cancel:'Annuler'
 				},
 
 				title:'C\'est embarassant...'
 
 			}).show(); 
-
-			//hack maison pour chopper uniquement l'event du clic sur la croix sans déclencher celui du bouton cancel
-			$('.ajs-close').on('click', function(event){
-				
-				event.preventDefault();
-				
-				//Fermeture de l'alerte
-				alertify.closeAll();
-
-				//Destruction des ordures laissés dans le DOM par le plugin
-				$('.alertify').remove();
-				
-				//Blocage de toute propagation/bubbling
-				return false;
-			});
 
 		},
 
@@ -466,6 +548,17 @@
 		},
 
 		/**
+		 * [buildSearchUrl Build the API url to request for searching videos]
+		 * 
+		 * @return {[string]} [an Url that can request the server's REST API to get videos results from youtube]
+		 */
+		buildSearchUrl : function(){
+
+			return self.searchPatternApi + self.lastSearchedPattern + '/' + self.currentPage; 
+
+		},
+
+		/**
 		 *	getPage
 		 *
 		 *	fonction permettant la navigation dans les pages de resultats
@@ -487,7 +580,15 @@
 
 			window.scrollTo(0,0);
 
-			SocketManager.pageSwitch(self.currentPage);
+			//On va faire requeter l'API du serveur pour récuperer le resultat de la recherche
+			$.ajax({
+				type:'GET',
+				url: self.buildSearchUrl(),
+				success:YoutubePlayer.YtSearchResponse,
+				error:function(){
+					alertify.error('Impossible de lancer une recherche :(');
+				}
+			});
 
 		},
 
@@ -587,24 +688,6 @@
 				self.pingTimeOutPopup = undefined;
 
 			},3000);
-
-		},
-
-		/**
-		 *	refreshPlaylist
-		 *
-		 *	Cette function sera appellée dés que l'objet playlist du serveur recevra un changement d'état (add/delete d'une musique dedans)
-		 *	Elle va s'occuper soit de creer l'affichage de la playlist chez le client si c'est la premiere fois qu'une musique est ajoutée dedans
-		 *	soit de mettre à jour cet affichage tout simplement.
-		 *
-		 *	@param: { array } - serverPlaylist - Le tableau playlist du serveur
-		 *
-		 *	@return: { void } 
-		 */
-		refreshPlaylist : function(serverPlaylist){
-
-			//Reception de l'objet playlist du serveur
-			//console.log(serverPlaylist);
 
 		}
 	
