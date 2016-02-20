@@ -9,8 +9,8 @@
 		<title>Open-Dj</title>
 		
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href="css/materialize.min.css" rel="stylesheet">
-		<link href="css/alertify.min.css" rel="stylesheet">
+		<link href="/css/materialize.min.css" rel="stylesheet">
+		<link href="/css/alertify.min.css" rel="stylesheet">
 
 		<!-- Chargement des scripts -->
 		<% if(dev === true){ %>
@@ -19,6 +19,7 @@
 			<link href="css/Build/open-dj.min.css" rel="stylesheet" type="text/css">
 		<% } %>
 		
+		<script type="text/javascript" src="/js/libs/angularjs1.5.0.js"></script>
 	
 	</head>
 
@@ -30,7 +31,7 @@
 
 				<div class="nav-wrapper teal lighten-1">
 			
-					<a href="#" onclick="event.preventDefault();" class="brand-logo center">Open-dj</a>
+					<a href="#" onclick="event.preventDefault();" class="brand-logo">Open-dj</a>
 
 					<!-- Navigation mobile-->
 					<a href="#" onclick="event.preventDefault();" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
@@ -42,6 +43,7 @@
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-down"><i class="medium material-icons">volume_down</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align music-resume"><i class="medium material-icons">play_arrow</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align music-pause"><i class="medium material-icons">pause</i></a></li>
+						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align switch-theme"><i class="medium material-icons">invert_colors</i></a></li>
 
 					</ul>
@@ -54,6 +56,7 @@
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-down"><i class="medium material-icons">volume_down</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-resume"><i class="medium material-icons">play_arrow</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-pause"><i class="medium material-icons">pause</i></a></li>
+						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align switch-theme"><i class="medium material-icons">invert_colors</i></a></li>
 
 					</ul>
@@ -192,16 +195,16 @@
 		<div id="config" class="hidden" data-host="<%= host %>" data-port="<%= port %>"></div>
 
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="js/jquery-2.0.1.min.js"></script>
-		<script src="js/materialize.min.js"></script>
-		<script src="js/alertify.min.js"></script>
+		<script src="/js/libs/jquery-2.0.1.min.js"></script>
+		<script src="/js/libs/materialize.min.js"></script>
+		<script src="/js/libs/alertify.min.js"></script>
 	
 		<!-- Chargement des scripts -->
 		<% if(dev === true){ %>
-			<script src="js/YoutubePlayer.js"></script>
-			<script src="js/SocketsManager.js"></script>
+			<script src="/js/YoutubePlayer.js"></script>
+			<script src="/js/SocketsManager.js"></script>
 		<% } else{ %>
-			<script src="js/Build/open.dj.min.js"></script>
+			<script src="/js/Build/open.dj.min.js"></script>
 		<% } %>
 
 	</body>
