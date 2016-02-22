@@ -21,8 +21,8 @@
 			//Destruction de la div config
 			$('#config').remove();
 
-			var address = ( port.length > 0 ) ? host + ':' + port : host;
-
+			var address = (port) ? host + ':' + port : host;
+			console.log(address);
 			//Etablissement de la connection bidrectionelle entre le serveur et le clients présent
 			self.conn = io.connect(address);
 
