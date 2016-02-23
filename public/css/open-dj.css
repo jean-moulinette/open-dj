@@ -5,6 +5,55 @@ body,html{
 }
 
 /**
+ * Styles pour le dashboard
+ */
+#dashboard-menu-panel{
+    position:fixed;
+    z-index:1500;
+    top:0;
+    min-width:100%;
+    min-height:100%;
+}
+
+.dashboard-menu-block{
+    float:left;
+    width:50%;
+    display:inline-block;
+}
+
+/**
+ * Content of menu blocks
+ */
+.dashboard-menu-block-content{
+    display:inline-block;
+    width:auto;
+    cursor:pointer;
+    line-height:0px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 1em 8% 0em 8%;
+    /*padding:1em 0em 0em 0em;*/
+}
+/**
+ * We need a element to divide menu blocks vertically
+ */
+.dashboard-menu-block-divider-large-screens{
+    width:100%;
+    display:inline-block;
+    padding-top:2.5em;
+}
+
+/**
+ * The buttons divider for mobiles. No need to add padding,
+ * the element himself will do the trick
+ */
+.dashboard-menu-block-divider-small-screens{
+    width:100%;
+    display:inline-block;
+}
+
+/**
  *	Styles de l'overlay 
  *	Pompés sur le fiddle http://jsfiddle.net/eys3d/402/
  */
