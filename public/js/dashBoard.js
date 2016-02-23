@@ -1,24 +1,43 @@
 (function(){
 
+	'use strict';
+
 	var app = angular.module('dash-board', []);
 
-	//Creating a factory which will be provided as service to our dashboard menu controller
-	app.factory('menuButtons', function(){
+	//We need a factory which will be used across the front-end vie
+	app.factory('menuActions', function(){
+		
+		var menuActions = {};
+
+		//When this attribute will be set to true, the dashboard will open, otherwise, it'll vanish
+		menuActions.open = false;
+
+		//The function that will invert the open value
+		menuActions.launchMenu = function(){
+				menuActions.open = !menuActions.open;
+		};
+
+		return menuActions;
+
+	});
+
+	//This factory will provide buttons objects which are also able to call some menuActions factory functions
+	app.factory('menuButtons', function(menuActions){
 
 		//Function to create a single button object
-		var createButton = function(libelle, click, icon){
+		var createButton = function(label, click, icon){
 			return {
-				libelle:libelle,
+				label:label,
 				click:click,
 				icon:icon
 			};
-		}
+		};
 
 		//Creating each buttons that we need
 		var historiqueButton = createButton('Historique', '', 'date_range');
 		var playlistsButton = createButton('Playlists', '', 'queue_music');
 		var chatButton = createButton('chat', '', 'chat');
-		var closeButton = createButton('Retour', '', 'clear');
+		var closeButton = createButton('Retour', menuActions.launchMenu, 'clear');
 
 		return [
 			historiqueButton,
@@ -29,31 +48,11 @@
 
 	});
 
-	//The dashboard menu controller which will contains the buttons to open the dashboard applications
-	//menuButtons is a service which will store buttons of the main menu
-	app.controller('dashboardMenuCtrl', ['menuButtons', '$scope', function(menuButtons, $scope){
+	//The dashboardMenuCtrl will bind my factories to the DOM and the angular expressions scope
+	app.controller('dashboardMenuCtrl', ['menuActions', 'menuButtons', '$scope', function(menuActions, menuButtons, $scope){
 
+		$scope.menuActions = menuActions;
 		$scope.buttons = menuButtons;
-
-		$scope.closeMainMenu = function(){
-			$scope.$emit('closeMenu');
-		}
-
-	}]);
-
-	//Creating a controller to open/close the dashboard menu wich will be present in the whole DOM
-	app.controller('toggleMenu', ['$scope', function($scope){
-		
-		$scope.open = false;
-
-		$scope.$on('closeMenu', function(event){
-			$scope.launchMenu();
-		});
-	
-		//Invert the boolean value of $scope.open
-		$scope.launchMenu = function(){
-			$scope.open = !$scope.open;
-		};
 
 	}]);
 

@@ -1,4 +1,4 @@
-<div ng-show="open" id="dashboard-menu-panel" class="valign-wrapper teal">
+<div ng-show="menuActions.open" id="dashboard-menu-panel" class="valign-wrapper teal">
 
 	<div class="container valign">
 
@@ -11,10 +11,10 @@
 
 					<div class="center-align dashboard-menu-block">
 
-						<div ng-click="{button.click()}" class="z-depth-4 dashboard-menu-block-content teal lighten-1">
+						<div ng-click="button.click()" class="z-depth-4 dashboard-menu-block-content teal lighten-1">
 							<i class="material-icons large hide-on-med-and-down">{{ button.icon }}</i>
 							<i class="material-icons medium hide-on-large-only">{{ button.icon }}</i>
-							<p class="flow-text">{{ button.libelle }}</p>
+							<p class="flow-text">{{ button.label }}</p>
 						</div>
 
 					</div>

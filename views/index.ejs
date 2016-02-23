@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="fr" ng-app="openDj" ng-controller="toggleMenu">
+<html lang="fr" ng-app="openDj" ng-controller="dashboardMenuCtrl">
 
 	<head>
 		<meta charset="UTF-8">
@@ -43,7 +43,7 @@
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-down"><i class="medium material-icons">volume_down</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align music-resume"><i class="medium material-icons">play_arrow</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align music-pause"><i class="medium material-icons">pause</i></a></li>
-						<li><a ng-click="launchMenu()" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
+						<li><a ng-click="menuActions.launchMenu();" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align switch-theme"><i class="medium material-icons">invert_colors</i></a></li>
 
 					</ul>
@@ -56,7 +56,7 @@
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-down"><i class="medium material-icons">volume_down</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-resume"><i class="medium material-icons">play_arrow</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-pause"><i class="medium material-icons">pause</i></a></li>
-						<li><a ng-click="launchMenu()" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
+						<li><a ng-click="menuActions.launchMenu();" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
 						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align switch-theme"><i class="medium material-icons">invert_colors</i></a></li>
 
 					</ul>
