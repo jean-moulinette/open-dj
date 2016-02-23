@@ -4,7 +4,7 @@
 
 	var app = angular.module('dash-board', []);
 
-	//We need a factory which will be used across the front-end vie
+	//We need a factory which will be used across the front-end via angular expressions or be called by menuButtons which will also be available in expressions
 	app.factory('menuActions', function(){
 		
 		var menuActions = {};
@@ -51,6 +51,7 @@
 	//The dashboardMenuCtrl will bind my factories to the DOM and the angular expressions scope
 	app.controller('dashboardMenuCtrl', ['menuActions', 'menuButtons', '$scope', function(menuActions, menuButtons, $scope){
 
+		//Adding my factories objects to the controller scope
 		$scope.menuActions = menuActions;
 		$scope.buttons = menuButtons;
 
