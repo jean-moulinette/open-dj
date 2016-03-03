@@ -1,7 +1,19 @@
-body,html{
+html{
+    height:100%;
     padding: 0;
     margin: 0;
+}
+
+body{
+    min-height:100%
+}
+
+.light-theme{
     background-color:#F6F4F1;
+}
+
+.dark-theme{
+    background-color:#263238;
 }
 
 /**
@@ -155,6 +167,10 @@ nav .button-collapse{
     overflow:hidden;
 }
 
+.result-block-content-wrapper{
+    cursor:pointer;
+}
+
 .result-block-img{
     width:15em;
 }
@@ -165,6 +181,7 @@ nav .button-collapse{
     white-space:nowrap;
     text-overflow:ellipsis;
 }
+
 
 /**
  *  Surcharge notifs et dialogs alertifyJS

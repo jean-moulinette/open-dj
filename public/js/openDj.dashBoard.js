@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var app = angular.module('dash-board', []);
+	var app = angular.module('dashBoard', []);
 
 	//We need a factory which will be used across the front-end via angular expressions or be called by menuButtons which will also be available in expressions
 	app.factory('menuActions', function(){
@@ -12,9 +12,20 @@
 		//When this attribute will be set to true, the dashboard will open, otherwise, it'll vanish
 		menuActions.open = false;
 
-		//The function that will invert the open value
-		menuActions.launchMenu = function(){
-				menuActions.open = !menuActions.open;
+		/**
+		 * [launchMenu The function that will invert the open value]
+		 * 
+		 * @param {[Oject]} 		event     	[DOM Event]
+		 * 
+		 * @return {[type]}       [description]
+		 */
+		menuActions.launchMenu = function(event){
+			
+			if(event){
+				event.preventDefault();
+			}
+			
+			menuActions.open = !menuActions.open;
 		};
 
 		return menuActions;
@@ -64,7 +75,7 @@
 			
 			restrict:'E',
 			
-			templateUrl:'/menu-panel.html',
+			templateUrl:'templates/dashboard/menu-panel.html',
 
 			controller:'dashboardMenuCtrl'
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="fr" ng-app="openDj" ng-controller="dashboardMenuCtrl">
+<html lang="fr" ng-app="openDj" ng-controller="mainController">
 
 	<head>
 		<meta charset="UTF-8">
@@ -23,43 +23,21 @@
 	
 	</head>
 
-	<body>
+	<body ng-class="playerWidget.theme">
+
+		<div ng-show="appGlobalWorkflow.overlay" id="overlay">
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</div>
 
 		<div class="navbar-fixed">
 
 			<nav>
 
 				<div class="nav-wrapper teal lighten-1">
-			
-					<a href="#" onclick="event.preventDefault();" class="brand-logo">Open-dj</a>
 
-					<!-- Navigation mobile-->
-					<a href="#" onclick="event.preventDefault();" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-
-					<ul id="slide-out" class="side-nav opendj-mobile-menu teal lighten-1">
-
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-indicator-full-text">Volume:<span class="volume-indicator" class="badge"><%= volume %></span></a></li>					
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-up"><i class="medium material-icons">volume_up</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-down"><i class="medium material-icons">volume_down</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align music-resume"><i class="medium material-icons">play_arrow</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align music-pause"><i class="medium material-icons">pause</i></a></li>
-						<li><a ng-click="menuActions.launchMenu();" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align switch-theme"><i class="medium material-icons">invert_colors</i></a></li>
-
-					</ul>
-
-					<!-- Navigation desktop-->
-					<ul class="right hide-on-med-and-down">
-
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-indicator-full-text">Volume:<span class="volume-indicator" class="badge"><%= volume %></span></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-up"><i class="medium material-icons">volume_up</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light volume-down"><i class="medium material-icons">volume_down</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-resume"><i class="medium material-icons">play_arrow</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light music-pause"><i class="medium material-icons">pause</i></a></li>
-						<li><a ng-click="menuActions.launchMenu();" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
-						<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align switch-theme"><i class="medium material-icons">invert_colors</i></a></li>
-
-					</ul>
+					<player-widget></player-widget>
 
 				</div>
 
@@ -69,64 +47,15 @@
 
 		<dash-board-menu-panel></dash-board-menu-panel>
 
-		<div class="container" style="margin-top:3em;">
-
-			<div class="center-align">
-
-				<form>
-
-					<div class="input-field">
-
-						<i class="mdi-action-search prefix"></i>
-						<input id="yt-search" type="text" class="validate">
-						<label for="yt-search">Musique sur youtube</label>
-
-					</div>
-
-					<div class="input-field">
-
-						<button id="launch-search" class="btn waves-effect waves-light" type="submit">Envoyer
-							<i class="mdi-content-send right"></i>
-						</button>
-
-					</div>
-
-				</form>
-			
-			</div>			
-
-			<!-- Résultats des recherches -->
-			<div class="row" style="margin-top:5em;">
-				
-				<div id="search-yt-results">
-
-				</div>
-			
-			</div>
-
-
-			<div class="center-align">
-				
-				<!-- Scroller de resultats -->
-				<ul id="yt-result-scroller" class="hidden pager">
-
-					<li id="page-prev" class="hidden waves-effect left"><a href="#!" onclick="event.preventDefault();"><i class="large mdi-navigation-chevron-left"></i></a></li>
-					
-					<li id="page-next" class="hidden waves-effect right"><a href="#!" onclick="event.preventDefault();"><i class="large mdi-navigation-chevron-right"></i></a></li>
-			
-				</ul>
-
-			</div>
-
-		</div>
+		<youtube-search></youtube-search>
 
 		<!-- Loader d'attente quand le client est hors connexion -->
-		<div id="overlay-transparent-loader" class="hidden">
+		<div ng-show="appGlobalWorkflow.disconnectOverlay" id="overlay-transparent-loader">
 
 			<div class="preloader-wrapper big active">
 				
 				<div class="spinner-layer spinner-blue">
-					
+
 					<div class="circle-clipper left">
 						<div class="circle"></div>
 					</div>
@@ -195,6 +124,7 @@
 
 		<!-- ejs init param getter -->
 		<div id="config" class="hidden" data-host="<%= host %>" data-port="<%= port %>"></div>
+		<div id="volume" data-volume="<%= volume %>"></div>
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/libs/jquery-2.0.1.min.js"></script>
@@ -203,10 +133,11 @@
 	
 		<!-- Chargement des scripts -->
 		<% if(dev === true){ %>
-			<script src="/js/YoutubePlayer.js"></script>
-			<script src="/js/SocketsManager.js"></script>
 			<script src="/js/openDj.js"></script>
-			<script src="/js/dashBoard.js"></script>
+			<script src="/js/openDj.playerWidget.js"></script>
+			<script src="/js/openDj.dashBoard.js"></script>
+			<script src="/js/openDj.youtube.js"></script>
+			<script src="/js/services/socket.service.js"></script>
 		<% } else{ %>
 			<script src="/js/Build/open.dj.min.js"></script>
 		<% } %>

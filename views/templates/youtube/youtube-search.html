@@ -1,0 +1,51 @@
+<div class="container" style="margin-top:3em;">
+
+	<div class="center-align">
+
+		<form>
+
+			<div class="input-field">
+
+				<i class="mdi-action-search prefix"></i>
+				<input id="yt-search" type="text" class="validate">
+				<label for="yt-search">Musique sur youtube</label>
+
+			</div>
+
+			<div class="input-field">
+
+				<button id="launch-search" ng-click="videosService.searchVideos(true)" class="btn waves-effect waves-light" type="submit">Envoyer
+					<i class="mdi-content-send right"></i>
+				</button>
+
+			</div>
+
+		</form>
+
+	</div>			
+
+	<!-- Résultats des recherches -->
+	<div class="row" style="margin-top:5em;">
+
+		<div id="search-yt-results">
+
+			<youtube-video></youtube-video>
+
+		</div>
+
+	</div>
+
+	<div class="center-align">
+
+		<!-- Scroller de resultats -->
+		<ul id="yt-result-scroller" class="pager">
+
+			<li ng-show="searchWorkflow.currentPage >= 2" id="page-prev" class="waves-effect left"><a ng-click="searchWorkflow.getPage('-', $event); videosService.searchVideos()" ><i class="large mdi-navigation-chevron-left"></i></a></li>
+
+			<li ng-show="searchWorkflow.resultsCount === 20" id="page-next" class="waves-effect right"><a ng-click="searchWorkflow.getPage('+', $event); videosService.searchVideos()" ><i class="large mdi-navigation-chevron-right"></i></a></li>
+
+		</ul>
+
+	</div>
+
+</div>

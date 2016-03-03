@@ -1,0 +1,19 @@
+<!-- Faire ici le template widget qui representera un bloc video resultant de la recherche -->
+<!-- Et qui sera ng repeat sur une collection d'objet dans le DOM -->
+<div ng-repeat="video in searchWorkflow.videoRequestResult" class="result-block col s12 m12 l4">
+
+	<div class="result-block-content-wrapper">
+
+		<a ng-click="videosService.playVideo(video, false, $event);">
+
+			<img class="responsive-img" ng-src="{{video.image}}">
+
+		</a>
+
+		<br>
+
+		<span class="result-block-title">{{video.title}}</span>
+
+	</div>
+
+</div>
