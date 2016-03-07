@@ -8,12 +8,30 @@ body{
     min-height:100%
 }
 
+.open-dj-logo{
+    padding:.4rem 0px 0px 3rem;
+    height:4rem;
+}
+
+.open-dj-logo-mobile{
+    display:inline-block;
+    height:100%;
+}
+
 .light-theme{
     background-color:#F6F4F1;
 }
 
 .dark-theme{
     background-color:#263238;
+}
+
+.no-padding{
+    padding:0 !important;
+}
+
+.bold{
+    font-weight:bold; 
 }
 
 /**
@@ -66,7 +84,7 @@ body{
 }
 
 /**
- *	Styles de l'overlay 
+ *	Styles de l'overlay
  *	Pompés sur le fiddle http://jsfiddle.net/eys3d/402/
  */
 #overlay {
@@ -148,7 +166,7 @@ nav .button-collapse{
 
 /**
  *	Surcharge du z-index du module des alertes
- *	
+ *
  *	Pour faire en sorte qu'il se trouve au dessus du menu site
  */
 .progress{
@@ -177,11 +195,12 @@ nav .button-collapse{
 
 .result-block-title{
     width:15em;
+    padding:
     overflow:hidden;
     white-space:nowrap;
+    font-weight:bold;
     text-overflow:ellipsis;
 }
-
 
 /**
  *  Surcharge notifs et dialogs alertifyJS

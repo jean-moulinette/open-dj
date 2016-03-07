@@ -5,9 +5,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		
+
 		<title>Open-Dj</title>
-		
+
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link href="/css/materialize.min.css" rel="stylesheet">
 		<link href="/css/alertify.min.css" rel="stylesheet">
@@ -18,9 +18,9 @@
 		<% } else{ %>
 			<link href="css/Build/open-dj.min.css" rel="stylesheet" type="text/css">
 		<% } %>
-		
+
 		<script type="text/javascript" src="/js/libs/angularjs1.5.0.js"></script>
-	
+
 	</head>
 
 	<body ng-class="playerWidget.theme">
@@ -31,19 +31,22 @@
 			</div>
 		</div>
 
-		<div class="navbar-fixed">
+		<nav>
 
-			<nav>
+			<div class="nav-wrapper teal lighten-1">
 
-				<div class="nav-wrapper teal lighten-1">
+				<a href="#" onclick="event.preventDefault();" class="brand-logo hide-on-med-and-down">
+					<img class="open-dj-logo" src="/images/open-dj-logo.svg">
+				</a>
 
-					<player-widget></player-widget>
+				<!-- Mobile menu -->
+				<a href="#" onclick="event.preventDefault();" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 
-				</div>
+				<player-widget></player-widget>
 
-			</nav>
+			</div>
 
-		</div>
+		</nav>
 
 		<dash-board-menu-panel></dash-board-menu-panel>
 
@@ -53,7 +56,7 @@
 		<div ng-show="appGlobalWorkflow.disconnectOverlay" id="overlay-transparent-loader">
 
 			<div class="preloader-wrapper big active">
-				
+
 				<div class="spinner-layer spinner-blue">
 
 					<div class="circle-clipper left">
@@ -67,11 +70,11 @@
 					<div class="circle-clipper right">
 						<div class="circle"></div>
 					</div>
-				
+
 				</div>
 
 				<div class="spinner-layer spinner-red">
-					
+
 					<div class="circle-clipper left">
 						<div class="circle"></div>
 					</div>
@@ -83,11 +86,11 @@
 					<div class="circle-clipper right">
 						<div class="circle"></div>
 					</div>
-				
+
 				</div>
 
 				<div class="spinner-layer spinner-yellow">
-					
+
 					<div class="circle-clipper left">
 						<div class="circle"></div>
 					</div>
@@ -99,11 +102,11 @@
 					<div class="circle-clipper right">
 						<div class="circle"></div>
 					</div>
-				
+
 				</div>
 
 				<div class="spinner-layer spinner-green">
-				
+
 					<div class="circle-clipper left">
 						<div class="circle"></div>
 					</div>
@@ -115,7 +118,7 @@
 					<div class="circle-clipper right">
 						<div class="circle"></div>
 					</div>
-				
+
 				</div>
 
 			</div>
@@ -130,7 +133,7 @@
 		<script src="/js/libs/jquery-2.0.1.min.js"></script>
 		<script src="/js/libs/materialize.min.js"></script>
 		<script src="/js/libs/alertify.min.js"></script>
-	
+
 		<!-- Chargement des scripts -->
 		<% if(dev === true){ %>
 			<script src="/js/openDj.js"></script>

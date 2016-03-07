@@ -1,21 +1,3 @@
-<a href="#" onclick="event.preventDefault();" class="brand-logo">Open-dj</a>
-
-<!-- Mobile menu -->
-<a href="#" onclick="event.preventDefault();" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-
-<!-- mobile nav -->
-<ul id="slide-out" class="side-nav opendj-mobile-menu teal lighten-1">
-
-	<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-indicator-full-text">Volume:<span class="volume-indicator" class="badge">{{playerWidget.volumeVal}}</span></a></li>					
-	<li><a href="#!" ng-click="playerWidget.setVolume('up', $event)" class="waves-effect waves-light center-align"><i class="medium material-icons">volume_up</i></a></li>
-	<li><a href="#!" ng-click="playerWidget.setVolume('down', $event)" class="waves-effect waves-light center-align"><i class="medium material-icons">volume_down</i></a></li>
-	<li><a href="#!" ng-click="playerWidget.resume($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">play_arrow</i></a></li>
-	<li><a href="#!" ng-click="playerWidget.pause($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">pause</i></a></li>
-	<li><a href="#!" ng-click="menuActions.launchMenu($event);" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
-	<li><a href="#!" ng-click="playerWidget.toggleTheme($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">invert_colors</i></a></li>
-
-</ul>
-
 <!-- desktop nav -->
 <ul class="right hide-on-med-and-down">
 
@@ -24,6 +6,25 @@
 	<li><a href="#!" ng-click="playerWidget.setVolume('down', $event)" class="waves-effect waves-light"><i class="medium material-icons">volume_down</i></a></li>
 	<li><a href="#!" ng-click="playerWidget.resume($event)" class="waves-effect waves-light"><i class="medium material-icons">play_arrow</i></a></li>
 	<li><a href="#!" ng-click="playerWidget.pause($event)" class="waves-effect waves-light"><i class="medium material-icons">pause</i></a></li>
+	<li><a href="#!" ng-click="menuActions.launchMenu($event);" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
+	<li><a href="#!" ng-click="playerWidget.toggleTheme($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">invert_colors</i></a></li>
+
+</ul>
+
+<!-- mobile nav -->
+<ul id="mobile-demo" class="side-nav opendj-mobile-menu teal lighten-1">
+
+	<li class="logo no-padding">
+		<a id="logo-container" href="/">
+			<img class="open-dj-logo-mobile" src="/images/open-dj-logo.svg">
+		</a>
+	</li>
+
+	<li><a href="#!" onclick="event.preventDefault();" class="waves-effect waves-light center-align volume-indicator-full-text">Volume:<span class="volume-indicator" class="badge">{{playerWidget.volumeVal}}</span></a></li>
+	<li><a href="#!" ng-click="playerWidget.setVolume('up', $event)" class="waves-effect waves-light center-align"><i class="medium material-icons">volume_up</i></a></li>
+	<li><a href="#!" ng-click="playerWidget.setVolume('down', $event)" class="waves-effect waves-light center-align"><i class="medium material-icons">volume_down</i></a></li>
+	<li><a href="#!" ng-click="playerWidget.resume($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">play_arrow</i></a></li>
+	<li><a href="#!" ng-click="playerWidget.pause($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">pause</i></a></li>
 	<li><a href="#!" ng-click="menuActions.launchMenu($event);" href="#!" class="waves-effect waves-light center-align dashboard-open"><i class="medium material-icons">dashboard</i></a></li>
 	<li><a href="#!" ng-click="playerWidget.toggleTheme($event)" class="waves-effect waves-light center-align"><i class="medium material-icons">invert_colors</i></a></li>
 
