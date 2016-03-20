@@ -40,7 +40,7 @@ Then you can proceed to the installation
  
     sudo apt-get upgrade
 
-    sudo apt-get install vlc-plugin*
+    sudo apt-get install vlc vlc-plugin*
 
 ---------------------------------------------------
 
